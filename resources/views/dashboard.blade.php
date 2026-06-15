@@ -314,7 +314,7 @@
         <div class="page-header">
             <div class="page-header-text">
                 <h1>Citizen Dashboard</h1>
-                <p>Welcome back, Alex. You have 2 reports requiring your attention.</p>
+                <p>Welcome back, {{ Auth::user()->name }}. You have 2 reports requiring your attention.</p>
             </div>
             <div class="page-header-actions">
                 <button class="btn btn-outline">
@@ -325,7 +325,7 @@
                     </svg>
                     Export Report History
                 </button>
-                <button class="btn btn-primary" >
+                <button class="btn btn-primary" onclick="window.location='{{ route('submit') }}'">
                     <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
                         <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/>
@@ -350,6 +350,7 @@
                         </svg>
                     </div>
                 </div>
+
                 <div class="stat-value">{{ $totalReports }}</div>
                 <div class="stat-footer up">
                     <span class="trend">
@@ -609,7 +610,9 @@
 
         {{-- Profile Card --}}
         <div class="profile-card">
-            <img src="https://i.pravatar.cc/80?img=8" alt="Alex Jenkins" class="profile-avatar">
+            <img src="{{ Auth::user()->profile_image
+    ? asset('storage/' . Auth::user()->profile_image)
+    : asset('images/default-user.png') }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
             <div class="profile-name">{{ Auth::user()->name }}</div>
             <div class="profile-email">{{ Auth::user()->email }}</div>
             <div class="rank-block">

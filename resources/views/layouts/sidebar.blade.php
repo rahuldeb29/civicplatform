@@ -84,10 +84,12 @@
 
     {{-- User Profile at Bottom --}}
     <div class="sidebar-user">
-        <img src="https://i.pravatar.cc/40?img=8" alt="Alex Jenkins" class="user-avatar-sm">
+        <img src="{{ Auth::user()->profile_image
+    ? asset('storage/' . Auth::user()->profile_image)
+    : asset('images/default-user.png') }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
         <div class="user-info">
-            <span class="user-name-sm">Alex Jenkins</span>
-            <span class="user-id">Resident ID: 88219</span>
+            <span class="user-name-sm">{{ Auth::user()->name }}</span>
+            <span class="user-id">Resident ID: 133</span>
         </div>
         <svg class="chevron-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
