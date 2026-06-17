@@ -36,6 +36,7 @@
             <img src="{{ Auth::user()->profile_image
     ? asset('storage/' . Auth::user()->profile_image)
     : asset('images/default-user.png') }}" alt="Profile Image" class="rounded-circle" width="40" height="40">
+
             <div class="user-meta">
                 <span class="user-name">{{ Auth::user()->name }}</span>
                 <span class="user-role">Citizen</span>
@@ -44,6 +45,17 @@
                 <path d="M6 9l6 6 6-6" stroke="#374151" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
+
+            <form method="POST" action="{{ route('logout') }}">
+                @csrf
+
+                <x-dropdown-link :href="route('logout')" onclick="event.preventDefault();
+                                this.closest('form').submit();">
+
+                    Logout
+
+                </x-dropdown-link>
+            </form>
         </div>
     </div>
 </header>

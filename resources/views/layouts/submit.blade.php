@@ -1,124 +1,225 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CivicPulse – @yield('title', 'Submit Report')</title>
+@extends('layouts.app')
+
+@section('title', 'Submit Report')
+
+@section('content')
+
     <style>
-        /* ─── Reset & Base ─────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        .submit-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #F3F4F6;
+        .page-header {
+            margin-bottom: 24px;
+        }
+
+        .page-header h1 {
+            font-size: 28px;
+            font-weight: 700;
             color: #111827;
-            display: flex;
-            height: 100vh;
-            overflow: hidden;
         }
 
-        /* ─── Sidebar ──────────────────────────────────────── */
-        .sidebar {
-            width: 200px; min-width: 200px;
-            background: #fff;
-            border-right: 1px solid #E5E7EB;
-            display: flex; flex-direction: column;
-            padding: 20px 0 0;
-            height: 100vh; overflow-y: auto;
+        .page-header p {
+            color: #6B7280;
+            margin-top: 6px;
         }
 
-        .sidebar-logo {
-            display: flex; align-items: center; gap: 10px;
-            padding: 0 16px 20px;
+        .report-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 24px;
         }
-        .logo-icon {
-            width: 34px; height: 34px; background: #1D4ED8;
-            border-radius: 7px;
-            display: flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-        }
-        .logo-text { display: flex; flex-direction: column; }
-        .logo-name { font-weight: 800; font-size: 13.5px; color: #111827; line-height: 1.2; }
-        .logo-sub  { font-size: 10.5px; color: #9CA3AF; }
 
-        .sidebar-nav { padding: 8px 10px; display: flex; flex-direction: column; gap: 1px; }
+        .card {
+            background: white;
+            border-radius: 12px;
+            border: 1px solid #E5E7EB;
+            padding: 24px;
+        }
 
-        .nav-item {
-            display: flex; align-items: center; gap: 10px;
-            padding: 9px 10px; border-radius: 8px;
-            font-size: 13px; font-weight: 500; color: #374151;
-            text-decoration: none; transition: background .15s, color .15s;
+        .card-title {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 20px;
         }
-        .nav-item:hover { background: #F3F4F6; }
-        .nav-item.active { background: #EFF6FF; color: #1D4ED8; }
-        .nav-item.active .nav-icon { color: #1D4ED8; }
 
-        .nav-icon { width: 17px; height: 17px; color: #9CA3AF; flex-shrink: 0; }
-        .nav-item.active .nav-icon { color: #1D4ED8; }
+        .form-group {
+            margin-bottom: 18px;
+        }
 
-        /* ─── Topbar ───────────────────────────────────────── */
-        .main-wrapper {
-            flex: 1; display: flex; flex-direction: column; overflow: hidden;
+        .form-label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #374151;
         }
-        .topbar {
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 0 24px;
-            height: 56px; min-height: 56px;
-            background: #fff; border-bottom: 1px solid #E5E7EB;
-        }
-        .search-wrapper { position: relative; flex: 1; max-width: 360px; }
-        .search-icon {
-            position: absolute; left: 11px; top: 50%; transform: translateY(-50%);
-            width: 15px; height: 15px; pointer-events: none;
-        }
-        .search-input {
-            width: 100%; padding: 7px 12px 7px 33px;
-            background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 8px;
-            font-size: 13px; color: #374151; outline: none;
-        }
-        .search-input::placeholder { color: #B0B7C3; }
-        .search-input:focus { border-color: #9CA3AF; background: #fff; }
 
-        .topbar-actions { display: flex; align-items: center; gap: 14px; }
-
-        .notif-btn {
-            position: relative; width: 34px; height: 34px;
-            display: flex; align-items: center; justify-content: center;
-            border-radius: 50%; cursor: pointer; transition: background .15s;
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #D1D5DB;
+            border-radius: 8px;
+            font-size: 14px;
         }
-        .notif-btn:hover { background: #F3F4F6; }
-        .notif-badge {
-            position: absolute; top: 2px; right: 2px;
-            background: #EF4444; color: #fff;
-            font-size: 9px; font-weight: 700;
-            min-width: 15px; height: 15px; border-radius: 8px;
-            display: flex; align-items: center; justify-content: center; padding: 0 3px;
-        }
-        .topbar-user { display: flex; align-items: center; gap: 10px; cursor: pointer; }
-        .user-avatar { width: 34px; height: 34px; border-radius: 50%; object-fit: cover; }
-        .user-meta { display: flex; flex-direction: column; }
-        .user-name { font-size: 13px; font-weight: 700; color: #111827; line-height: 1.2; }
-        .user-role { font-size: 11px; color: #9CA3AF; }
 
-        /* ─── Page Content ─────────────────────────────────── */
-        .page-content {
-            flex: 1; overflow-y: auto;
-            padding: 28px 32px;
-            background: #F3F4F6;
+        .form-control:focus {
+            outline: none;
+            border-color: #1D4ED8;
+        }
+
+        textarea.form-control {
+            resize: vertical;
+            min-height: 120px;
+        }
+
+        .upload-box {
+            border: 2px dashed #D1D5DB;
+            border-radius: 12px;
+            padding: 40px;
+            text-align: center;
+            background: #F9FAFB;
+        }
+
+        .summary-item {
+            margin-bottom: 16px;
+        }
+
+        .summary-label {
+            color: #6B7280;
+            font-size: 13px;
+        }
+
+        .summary-value {
+            font-weight: 600;
+            color: #111827;
+            margin-top: 4px;
+        }
+
+        .btn-submit {
+            background: #1D4ED8;
+            color: white;
+            border: none;
+            padding: 14px 24px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .btn-submit:hover {
+            background: #1E40AF;
         }
     </style>
-    @stack('styles')
-</head>
-<body>
-    @include('components.sidebar-submit')
 
-    <div class="main-wrapper">
-        @include('components.navbar-submit')
-        <main class="page-content">
-            @yield('content')
-        </main>
+    <div class="submit-container">
+
+        <div class="page-header">
+            <h1>Submit New Report</h1>
+            <p>Report civic issues in your area and help improve community infrastructure.</p>
+        </div>
+
+        <div class="report-grid">
+
+            <!-- Left Form -->
+            <div>
+
+                <div class="card">
+                    <h2 class="card-title">Issue Details</h2>
+
+                    <form method="POST" action="{{ route('reports.store') }}" enctype="multipart/form-data">
+                        @csrf
+
+                        <div class="form-group">
+                            <label class="form-label">Report Title</label>
+                            <input type="text" name="title" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Issue Category</label>
+                            <select name="category" class="form-control">
+                                <option>Road Damage</option>
+                                <option>Street Light</option>
+                                <option>Water Leakage</option>
+                                <option>Garbage</option>
+                                <option>Drainage</option>
+                                <option>Electricity</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Priority</label>
+                            <select name="priority" class="form-control">
+                                <option>Low</option>
+                                <option>Medium</option>
+                                <option>High</option>
+                                <option>Critical</option>
+                            </select>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Description</label>
+                            <textarea name="description" class="form-control"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Location</label>
+                            <input type="text" name="location" class="form-control">
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Upload Evidence</label>
+
+                            <div class="upload-box">
+                                <input type="file" name="image">
+                            </div>
+                        </div>
+
+                        <button type="submit"  class="btn-submit">
+                            Submit Report
+                        </button>
+
+                        
+                       
+
+                    </form>
+                </div>
+
+            </div>
+
+            <!-- Right Summary -->
+            <div>
+
+                <div class="card">
+                    <h2 class="card-title">Report Summary</h2>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Status</div>
+                        <div class="summary-value">Draft</div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Department</div>
+                        <div class="summary-value">Auto Assigned</div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Estimated Response</div>
+                        <div class="summary-value">24 - 48 Hours</div>
+                    </div>
+
+                    <div class="summary-item">
+                        <div class="summary-label">Citizen</div>
+                        <div class="summary-value">
+                            {{ Auth::user()->name }}
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
     </div>
 
-    @stack('scripts')
-</body>
-</html>
+@endsection

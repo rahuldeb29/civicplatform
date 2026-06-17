@@ -12,43 +12,43 @@ class DashboardController extends Controller
 {
     public function index()
     {
-        $user = Auth::user();
+        $user = Auth::id();
         $now  = Carbon::now();
 
         $lastMonthStart = $now->copy()->subMonth()->startOfMonth();
         $lastMonthEnd   = $now->copy()->subMonth()->endOfMonth();
 
         // ── Stat counts ────────────────────────────────────────────
-        $totalReports = Report::where('id', $user->id)->count();
+        $totalReports = Report::where('user_id', $user)->count();
 
-        $pendingReports = Report::where('id', $user->id)
-                                ->whereIn('status', ['pending', 'submitted'])
-                                ->count();
+        $pendingReports = Report::where('user_id', $user)
+    ->whereIn('status', ['pending', 'submitted'])
+    ->count();
 
-        $inProgressReports = Report::where('id', $user->id)
+        $inProgressReports = Report::where('id', $user)
                                    ->where('status', 'in_progress')
                                    ->count();
 
-        $resolvedReports = Report::where('id', $user->id)
+        $resolvedReports = Report::where('id', $user)
                                  ->where('status', 'resolved')
                                  ->count();
 
         // ── Last-month counts for trend calculation ────────────────
-        $lastMonthTotal = Report::where('id', $user->id)
+        $lastMonthTotal = Report::where('id', $user)
                                 ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                 ->count();
 
-        $lastMonthPending = Report::where('id', $user->id)
+        $lastMonthPending = Report::where('id', $user)
                                   ->whereIn('status', ['pending', 'submitted'])
                                   ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                   ->count();
 
-        $lastMonthInProgress = Report::where('id', $user->id)
+        $lastMonthInProgress = Report::where('id', $user)
                                      ->where('status', 'in_progress')
                                      ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                      ->count();
 
-        $lastMonthResolved = Report::where('id', $user->id)
+        $lastMonthResolved = Report::where('id', $user)
                                    ->where('status', 'resolved')
                                    ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                    ->count();
@@ -60,41 +60,40 @@ class DashboardController extends Controller
         $resolvedTrend   = $this->calcTrend($resolvedReports, $lastMonthResolved);
 
         // ── Paginated report history ───────────────────────────────
-        $reports = Report::where('id', $user->id)
-                         ->with('department')
-                         ->latest()
-                         ->paginate(10);
+        $reports = Report::where('user_id', $user)
+    ->latest()
+    ->paginate(10);
 
         // ── Recent notifications ───────────────────────────────────
         // Use DB notifications table if you have one, or Laravel's built-in
         $notifications = DB::table('notifications')
-                            ->where('id', $user->id)
+                            ->where('id', $user)
                             ->latest()
                             ->take(5)
                             ->get();
 
         // ── Attention count ────────────────────────────────────────
-        $attentionCount = Report::where('id', $user->id)
+        $attentionCount = Report::where('id', $user)
                                 ->whereIn('status', ['pending', 'submitted', 'assigned'])
                                 ->count();
 
         // ── Most recent active report for Case Tracker ─────────────
-        $activeReport = Report::where('id', $user->id)
+        $activeReport = Report::where('id', $user)
                               ->whereNotIn('status', ['resolved', 'closed'])
-                              ->with('statusLogs')
+                            //   ->with('statusLogs')
                               ->latest()
                               ->first();
 
         // ── Impact rank ────────────────────────────────────────────
-        $impactRank = $this->getImpactRank($user->id);
+       $impactRank = $this->getImpactRank(Auth::id());
 
         // ── Map pins ───────────────────────────────────────────────
-        $mapReports = Report::where('id', $user->id)
-                            ->whereNotNull('latitude')
-                            ->whereNotNull('longitude')
-                            ->latest()
-                            ->take(10)
-                            ->get(['id', 'status', 'latitude', 'longitude']);
+        // $mapReports = Report::where('id', $user->id)
+        //                     ->whereNotNull('latitude')
+        //                     ->whereNotNull('longitude')
+        //                     ->latest()
+        //                     ->take(10)
+        //                     ->get(['id', 'status', 'latitude', 'longitude']);
 
         return view('dashboard', compact(
             'user',
@@ -111,7 +110,6 @@ class DashboardController extends Controller
             'attentionCount',
             'activeReport',
             'impactRank',
-            'mapReports',
         ));
     }
 
@@ -131,10 +129,10 @@ class DashboardController extends Controller
 
     private function getImpactRank(int $userId): int
     {
-        $rows = Report::selectRaw('id, COUNT(*) as cnt')
-                      ->groupBy('id')
-                      ->orderByDesc('cnt')
-                      ->get();
+        $rows = Report::selectRaw('user_id, COUNT(*) as cnt')
+              ->groupBy('user_id')
+              ->orderByDesc('cnt')
+              ->get();
 
         $rank = 1;
         foreach ($rows as $row) {

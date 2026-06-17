@@ -12,17 +12,15 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
-        'department_id',
         'title',
+        'category',
+        'priority',
         'description',
-        'address',
-        'status',       // submitted | pending | assigned | in_progress | resolved | closed
-        'priority',     // low | medium | high | critical
-        'latitude',
-        'longitude',
+        'location',
+        'image',
+        'status'
     ];
 
-    // ── Relationships ──────────────────────────────────────────────
 
     public function user()
     {
@@ -34,59 +32,71 @@ class Report extends Model
         return $this->belongsTo(Department::class);
     }
 
+    public function photos()
+    {
+        return $this->hasMany(ReportImage::class);
+    }
+
+    public function activities()
+    {
+        return $this->hasMany(ReportStatusLog::class);
+    }
+
+    public function feedback()
+    {
+        return $this->hasOne(ReportFeedback::class);
+    }
+
+    public function reporter()
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
+
+    public function resolutionNote()
+    {
+        return $this->hasOne(ReportUpdate::class);
+    }
+
     public function statusLogs()
     {
         return $this->hasMany(ReportStatusLog::class)->orderBy('created_at');
     }
 
-    // ── Accessors ──────────────────────────────────────────────────
-
-    /**
-     * Human-readable status label.
-     */
     public function getStatusLabelAttribute(): string
     {
         return match ($this->status) {
-            'submitted'   => 'Submitted',
-            'pending'     => 'Pending',
-            'assigned'    => 'Assigned',
+            'submitted' => 'Submitted',
+            'pending' => 'Pending',
+            'assigned' => 'Assigned',
             'in_progress' => 'In Progress',
-            'resolved'    => 'Resolved',
-            'closed'      => 'Closed',
-            default       => ucfirst($this->status),
+            'resolved' => 'Resolved',
+            'closed' => 'Closed',
+            default => ucfirst($this->status),
         };
     }
 
-    /**
-     * CSS class suffix for status badge.
-     */
     public function getStatusClassAttribute(): string
     {
         return match ($this->status) {
             'in_progress' => 'progress',
-            'assigned'    => 'assigned',
-            'resolved'    => 'resolved',
-            default       => 'assigned',
+            'assigned' => 'assigned',
+            'resolved' => 'resolved',
+            default => 'assigned',
         };
     }
 
-    /**
-     * CSS class suffix for priority badge.
-     */
     public function getPriorityClassAttribute(): string
     {
         return match ($this->priority) {
-            'low'      => 'low',
-            'medium'   => 'medium',
-            'high'     => 'high',
+            'low' => 'low',
+            'medium' => 'medium',
+            'high' => 'high',
             'critical' => 'critical',
-            default    => 'medium',
+            default => 'medium',
         };
     }
 
-    /**
-     * Formatted report ID like #CR-9012.
-     */
+    
     public function getFormattedIdAttribute(): string
     {
         return '#CR-' . str_pad($this->id, 4, '0', STR_PAD_LEFT);

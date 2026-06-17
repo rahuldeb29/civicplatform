@@ -12,12 +12,18 @@ return new class extends Migration {
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
             $table->string('title');
+            $table->string('category');
+            $table->string('priority');
             $table->text('description');
+            $table->string('location');
+            $table->string('image')->nullable();
             $table->string('status')->default('Submitted');
             $table->timestamps();
         });
     }
+
 
     /**
      * Reverse the migrations.
