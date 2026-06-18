@@ -1,5 +1,5 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
         @csrf
 
         <!-- Name -->
@@ -15,6 +15,8 @@
             <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
             <x-input-error :messages="$errors->get('email')" class="mt-2" />
         </div>
+
+
 
         <!-- Password -->
         <div class="mt-4">
@@ -38,6 +40,20 @@
 
             <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
+        <!-- Profile Image -->
+<div class="mt-4">
+    <x-input-label for="profile_image" :value="__('Profile Image')" />
+
+    <input
+        id="profile_image"
+        type="file"
+        name="profile_image"
+        accept="image/*"
+        class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
+    >
+
+    <x-input-error :messages="$errors->get('profile_image')" class="mt-2" />
+</div>
 
         <div class="flex items-center justify-end mt-4">
             <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">

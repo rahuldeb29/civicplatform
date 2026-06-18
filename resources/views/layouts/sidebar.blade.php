@@ -65,7 +65,7 @@
                         stroke-linecap="round" />
                 </svg>
                 Notifications
-                <span class="badge">3</span>
+                <span class="badge">7</span>
             </div>
         </a>
         <a href="#" class="nav-item">
@@ -103,8 +103,9 @@
 
     {{-- User Profile at Bottom --}}
     <div class="emergency-content">
-        <button class="bg-black text-white rounded "
-            style="height: 50px; width: 200px; margin-left: 5px; color: white; background-color: black; font-weight: 700; border-radius: 6px; margin-top: 360px; cursor: pointer;">Emergency
+        <button class="bg-black text-white rounded " onclick="emergency()"
+            style="height: 50px; width: 200px; margin-left: 5px; color: white; background-color: black; font-weight: 700; border-radius: 6px; margin-top: 360px; cursor: pointer;"
+            data-bs-toggle="modal" data-bs-target="#emergencyModal">Emergency
             Contact</button>
     </div>
     <div class="sidebar-user">
@@ -120,4 +121,128 @@
                 stroke-linejoin="round" />
         </svg>
     </div>
+
+
+    {{-- Pop-Up Model for Emergency Contact Details --}}
+
+    <div class="modal fade" id="emergencyModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
+
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    🚨 Emergency Contact Directory
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal">
+                </button>
+            </div>
+
+            <div class="modal-body">
+
+                <div class="row g-3">
+
+                    <div class="col-md-6">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <h6>Police Control Room</h6>
+                                <h4 class="text-danger">100</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h6>Ambulance</h6>
+                                <h4 class="text-success">108</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-warning">
+                            <div class="card-body">
+                                <h6>Fire Brigade</h6>
+                                <h4 class="text-warning">101</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h6>Disaster Management</h6>
+                                <h4 class="text-primary">1070</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Women Helpline</h6>
+                                <h4>1091</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Child Helpline</h6>
+                                <h4>1098</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <h6 class="mb-3">Local Government Offices</h6>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PWD Department</td>
+                            <td>+91 381 1234567</td>
+                        </tr>
+                        <tr>
+                            <td>Water Supply</td>
+                            <td>+91 381 2234567</td>
+                        </tr>
+                        <tr>
+                            <td>Electricity</td>
+                            <td>+91 381 3234567</td>
+                        </tr>
+                        <tr>
+                            <td>Sanitation</td>
+                            <td>+91 381 4234567</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary"
+                        data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+
+        </div>
+    </div>
+</div>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 </aside>

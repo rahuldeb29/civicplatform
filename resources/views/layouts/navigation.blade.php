@@ -18,7 +18,7 @@
                     stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="#374151" stroke-width="2" stroke-linecap="round" />
             </svg>
-            <span class="notif-badge">9</span>
+            <span class="notif-badge">7</span>
         </div>
 
         {{-- Settings --}}

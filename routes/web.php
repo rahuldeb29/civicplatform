@@ -33,7 +33,7 @@ Route::get('/submit', function () {
     return view('layouts.submit');
 })->name('submit');
 
-
+Route::get('/admin/dashboard', fn () => view('admin.dashboard'))->name('admin.dashboard');
 
 Route::get('/reports/{report}', [ReportController::class, 'show'])
     ->name('show');

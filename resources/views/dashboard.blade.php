@@ -681,6 +681,255 @@
             z-index: 1;
         }
 
+
+
+
+        .chart-row {
+        display: grid; grid-template-columns: 420px 1fr; gap: 20px;
+        margin-bottom: 24px;
+    }
+    .card {
+        background: #fff; border: 1px solid #E5E7EB; border-radius: 14px;
+        padding: 22px;
+    }
+    .card-title-row {
+        display: flex; align-items: center; justify-content: space-between;
+        margin-bottom: 18px;
+    }
+    .card-title {
+        font-size: 16px; font-weight: 700; color: #111827;
+        display: flex; align-items: center; gap: 8px;
+    }
+    .card-title svg { width: 18px; height: 18px; color: #2563EB; }
+
+    .view-all-mini {
+        font-size: 13px; font-weight: 600; color: #2563EB;
+        text-decoration: none;
+    }
+    .view-all-mini:hover { text-decoration: underline; }
+
+    /* Donut */
+    .donut-wrap { display: flex; align-items: center; gap: 24px; }
+    .donut-canvas-box { position: relative; width: 170px; height: 170px; flex-shrink: 0; }
+    .donut-center {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        text-align: center; pointer-events: none;
+    }
+    .donut-center-value { font-size: 21px; font-weight: 800; color: #111827; line-height: 1; }
+    .donut-center-label { font-size: 11px; color: #9CA3AF; margin-top: 2px; }
+    .donut-legend { display: flex; flex-direction: column; gap: 13px; flex: 1; }
+    .legend-row { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .legend-left { display: flex; align-items: center; gap: 9px; }
+    .legend-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+    .legend-name { font-size: 13px; color: #374151; }
+    .legend-value { font-size: 13px; color: #6B7280; white-space: nowrap; }
+
+    .line-legend { display: flex; align-items: center; gap: 7px; font-size: 12.5px; color: #6B7280; }
+    .line-legend .legend-dot { background: #2563EB; }
+    .line-chart-box { height: 230px; }
+
+    /* ─── Report History ─────────────────────────────────────── */
+    .reports-card { padding: 22px 0 6px; margin-bottom: 24px; }
+    .reports-card .card-title-row { padding: 0 22px; }
+
+    .table-toolbar { display: flex; gap: 10px; }
+    .toolbar-btn {
+        display: inline-flex; align-items: center; gap: 8px;
+        padding: 8px 16px; border-radius: 8px;
+        background: #fff; border: 1px solid #E5E7EB;
+        font-size: 13px; font-weight: 500; color: #374151;
+        cursor: pointer; font-family: inherit;
+    }
+    .toolbar-btn:hover { background: #F9FAFB; }
+    .toolbar-btn svg { width: 13px; height: 13px; color: #6B7280; }
+
+    .recent-table { width: 100%; border-collapse: collapse; }
+    .recent-table th {
+        padding: 14px 22px; text-align: left;
+        font-size: 12px; font-weight: 600; color: #6B7280;
+        background: #F9FAFB; text-transform: uppercase; letter-spacing: 0.5px;
+        border-top: 1px solid #F3F4F6;
+        border-bottom: 1px solid #F3F4F6;
+        white-space: nowrap;
+    }
+    .recent-table td {
+        padding: 14px 22px; font-size: 13.5px; color: #374151;
+        border-bottom: 1px solid #F8F9FB; vertical-align: middle;
+    }
+    .recent-table tr:last-child td { border-bottom: none; }
+    .recent-table tr:hover td { background: #FAFAFB; }
+
+    .id-cell { color: #6B7280; font-weight: 500; }
+    .title-cell { font-weight: 600; color: #111827; }
+
+    .pill {
+        display: inline-block; padding: 3px 11px; border-radius: 14px;
+        font-size: 11.5px; font-weight: 600;
+    }
+    .pill-water-leakage { background: #DBEAFE; color: #1D4ED8; }
+    .pill-street-light  { background: #FEF3C7; color: #B45309; }
+    .pill-garbage       { background: #F3E8FF; color: #7E22CE; }
+    .pill-road-damage   { background: #DCFCE7; color: #15803D; }
+    .pill-drainage      { background: #FEE2E2; color: #B91C1C; }
+
+    .priority-pill { background: #FEE2E2; color: #B91C1C; }
+    .priority-pill.medium { background: #FEF3C7; color: #B45309; }
+    .priority-pill.low    { background: #DCFCE7; color: #15803D; }
+
+    .status-text { font-weight: 600; font-size: 13px; }
+    .status-assigned    { color: #1D4ED8; }
+    .status-in_progress { color: #B45309; }
+    .status-pending     { color: #DC2626; }
+    .status-resolved    { color: #16A34A; }
+
+    .view-btn {
+        width: 32px; height: 32px; border-radius: 8px;
+        display: flex; align-items: center; justify-content: center;
+        background: #F3F4F6; border: none; cursor: pointer;
+        transition: background .15s;
+    }
+    .view-btn:hover { background: #E5E7EB; }
+    .view-btn svg { width: 15px; height: 15px; color: #374151; }
+
+    /* Pagination */
+    .pagination-wrap {
+        display: flex; align-items: center; justify-content: space-between;
+        padding: 18px 22px 8px;
+    }
+    .pagination-info { font-size: 14px; color: #6B7280; }
+    .pagination-btns { display: flex; gap: 6px; }
+    .page-btn {
+        min-width: 34px; height: 34px;
+        padding: 0 12px; border-radius: 7px;
+        border: 1px solid transparent; background: transparent;
+        font-size: 13px; font-weight: 500; color: #6B7280;
+        cursor: pointer; font-family: inherit;
+        display: inline-flex; align-items: center; justify-content: center; gap: 4px;
+        transition: all .15s;
+    }
+    .page-btn:hover:not(.active) { background: #F3F4F6; color: #111827; }
+    .page-btn.active {
+        background: #2563EB; color: #fff;
+    }
+    .page-btn svg { width: 12px; height: 12px; }
+
+    /* ─── Mid Row: Notifications + Map ───────────────────────── */
+    .mid-row {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        margin-bottom: 24px;
+    }
+
+    /* Notifications */
+    .notif-list { display: flex; flex-direction: column; max-height: 360px; overflow-y: auto; }
+    .notif-item {
+        display: flex; gap: 14px; align-items: flex-start;
+        padding: 14px 0;
+    }
+    .notif-icon {
+        width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
+        display: flex; align-items: center; justify-content: center;
+    }
+    .notif-icon svg { width: 18px; height: 18px; }
+    .ni-blue   { background: #EFF6FF; color: #3B82F6; }
+    .ni-amber  { background: #FFF7ED; color: #F59E0B; }
+    .ni-green  { background: #F0FDF4; color: #16A34A; }
+    .ni-red    { background: #FEF2F2; color: #DC2626; }
+    .ni-purple { background: #F3E8FF; color: #7E22CE; }
+
+    .notif-body { flex: 1; padding-top: 2px; }
+    .notif-body p { font-size: 14px; color: #374151; line-height: 1.45; }
+    .notif-time { font-size: 12px; color: #9CA3AF; margin-top: 4px; }
+
+    /* Map */
+    #reportMap {
+        height: 320px; border-radius: 10px; border: 1px solid #E5E7EB;
+    }
+
+    /* ─── Bottom Row: Quick Summary + Case Tracker ───────────── */
+    .bottom-row {
+        display: grid; grid-template-columns: 1fr 1fr; gap: 20px;
+        align-items: start;
+    }
+
+    /* Quick Summary */
+    .summary-list { display: flex; flex-direction: column; gap: 4px; }
+    .summary-item {
+        display: flex; align-items: center; gap: 12px;
+        padding: 11px 0;
+        border-bottom: 1px solid #F8F9FB;
+    }
+    .summary-item:last-child { border-bottom: none; }
+    .summary-icon {
+        width: 34px; height: 34px; border-radius: 9px;
+        background: #F3F4F6;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .summary-icon svg { width: 16px; height: 16px; color: #374151; }
+    .summary-label { flex: 1; font-size: 13.5px; color: #374151; }
+    .summary-value { font-size: 14px; font-weight: 700; color: #111827; }
+
+    /* ─── Case Tracker (Reference Style) ─────────────────────── */
+    .case-active-box {
+        background: #F9FAFB;
+        border: 1px solid #E5E7EB;
+        border-radius: 10px;
+        padding: 14px 16px;
+        margin-bottom: 20px;
+    }
+    .case-active-label {
+        font-size: 11px; font-weight: 600; color: #9CA3AF;
+        text-transform: uppercase; letter-spacing: 0.8px;
+    }
+    .case-active-id {
+        display: block; font-size: 15px; font-weight: 700;
+        color: #111827; margin-top: 4px; text-decoration: none;
+    }
+
+    .timeline { display: flex; flex-direction: column; gap: 18px; }
+    .timeline-item {
+        display: flex; gap: 14px; align-items: flex-start;
+    }
+    .timeline-dot {
+        width: 24px; height: 24px; border-radius: 50%;
+        display: flex; align-items: center; justify-content: center;
+        flex-shrink: 0;
+    }
+    .timeline-dot svg { width: 12px; height: 12px; }
+    .dot-done {
+        background: #DCFCE7; color: #16A34A;
+    }
+    .dot-active {
+        background: #DBEAFE; color: #2563EB;
+        position: relative;
+    }
+    .dot-active::after {
+        content: ''; position: absolute; inset: 0; border-radius: 50%;
+        border: 2px solid #2563EB;
+    }
+    .dot-active svg { color: #2563EB; }
+    .dot-pending {
+        background: #F3F4F6; color: #9CA3AF;
+        border: 2px dashed #D1D5DB;
+    }
+    .timeline-content { flex: 1; padding-top: 2px; }
+    .timeline-content h4 {
+        font-size: 14px; font-weight: 600; color: #111827;
+    }
+    .timeline-content p {
+        font-size: 12px; color: #9CA3AF; margin-top: 2px;
+    }
+    .timeline-item.pending .timeline-content h4 { color: #6B7280; }
+
+    /* ─── Responsive ─────────────────────────────────────────── */
+    @media (max-width: 1200px) {
+        .stat-cards { grid-template-columns: repeat(2, 1fr); }
+        .chart-row, .mid-row, .bottom-row { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+        .stat-cards { grid-template-columns: 1fr; }
+    }
+
         .step-dot.done {
             background: #16A34A;
         }
@@ -756,6 +1005,9 @@
 
 @section('content')
     {{-- The content area is wrapped in the dashboard grid --}}
+
+    <link rel="stylesheet"
+      href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <div class="dashboard-grid">
 
         {{-- LEFT: main content --}}
@@ -1052,68 +1304,70 @@
             </div>
 
             {{-- Bottom Row: Notifications + Map --}}
-            <div class="bottom-row">
-
-                {{-- Recent Notifications --}}
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Recent Notifications</span>
-                        <a href="#" class="card-header-link">View All</a>
-                    </div>
-                    <div class="notif-list">
-                        <div class="notif-item">
-                            <div class="notif-ico blue">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="#1D4ED8" stroke-width="2"
-                                        stroke-linecap="round" />
-                                    <circle cx="9" cy="7" r="4" stroke="#1D4ED8" stroke-width="2" />
-                                    <path d="M23 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75" stroke="#1D4ED8"
-                                        stroke-width="2" stroke-linecap="round" />
-                                </svg>
-                            </div>
-                            <div class="notif-text">
-                                <div class="notif-msg">Your report #CR-9012 has been assigned to Public Works Department.
-                                </div>
-                                <div class="notif-time">10 minutes ago</div>
-                            </div>
-                        </div>
-                        <div class="notif-item">
-                            <div class="notif-ico orange">
-                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <circle cx="12" cy="12" r="9" stroke="#D97706" stroke-width="2" />
-                                    <polyline points="12 7 12 12 15 15" stroke="#D97706" stroke-width="2"
-                                        stroke-linecap="round" />
-                                </svg>
-                            </div>
-                            <div class="notif-text">
-                                <div class="notif-msg">Status updated for #CR-8702 - Water Leakage.</div>
-                                <div class="notif-time">2 hours ago</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                {{-- Reports on Map --}}
-                <div class="card">
-                    <div class="card-header">
-                        <span class="card-title">Reports on Map</span>
-                        <a href="#" class="card-header-link">View All</a>
-                    </div>
-                    <div class="map-container">
-                        <div class="map-placeholder">
-                            <div class="map-road-h"></div>
-                            <div class="map-road-v"></div>
-                            <div class="map-road-v map-road-v2"></div>
-                            {{-- Map pins --}}
-                            <span class="map-pin" style="left:22%;top:58%;">📍</span>
-                            <span class="map-pin" style="left:44%;top:70%;font-size:20px;">🔴</span>
-                            <span class="map-pin" style="left:60%;top:55%;">📍</span>
-                            <span class="map-pin" style="left:78%;top:62%;color:#1D4ED8;font-size:20px;">📍</span>
-                        </div>
-                    </div>
-                </div>
-
+            <div class="mid-row">
+        <div class="card">
+            <div class="card-title-row">
+                <span class="card-title">Recent Notifications</span>
+                <a href="#" class="view-all-mini">View All</a>
             </div>
+            <div class="notif-list">
+                <div class="notif-item">
+                    <div class="notif-icon ni-blue">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2"/><path d="M19 8v6M22 11h-6" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <p>Your report <strong>#CR-9012</strong> has been assigned to Public Works Department.</p>
+                        <div class="notif-time">10 minutes ago</div>
+                    </div>
+                </div>
+                <div class="notif-item">
+                    <div class="notif-icon ni-amber">
+                        <svg viewBox="0 0 24 24" fill="none"><circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/><polyline points="12 7 12 12 15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <p>Status updated for <strong>#CR-8702</strong> - Water Leakage.</p>
+                        <div class="notif-time">2 hours ago</div>
+                    </div>
+                </div>
+                <div class="notif-item">
+                    <div class="notif-icon ni-green">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <p>Report <strong>#CR-8650</strong> - Pothole Repair has been resolved successfully.</p>
+                        <div class="notif-time">5 hours ago</div>
+                    </div>
+                </div>
+                <div class="notif-item">
+                    <div class="notif-icon ni-purple">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M14 2v6h6M12 18v-6M9 15h6" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <p>New report <strong>#CR-9013</strong> submitted by citizen Anjali Shil for Street Light issue.</p>
+                        <div class="notif-time">8 hours ago</div>
+                    </div>
+                </div>
+                <div class="notif-item">
+                    <div class="notif-icon ni-red">
+                        <svg viewBox="0 0 24 24" fill="none"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0zM12 9v4M12 17h.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+                    </div>
+                    <div class="notif-body">
+                        <p>High priority report <strong>#CR-9010</strong> - Drainage overflow requires immediate attention.</p>
+                        <div class="notif-time">1 day ago</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="card">
+            <div class="card-title-row">
+                <span class="card-title">Reports on Map</span>
+                <a href="#" class="view-all-mini">View All</a>
+            </div>
+            <div id="reportMap"></div>
+        </div>
+    </div>
+
         </div>
 
         {{-- RIGHT: profile + case tracker --}}
@@ -1248,4 +1502,47 @@
 
         </div>
     </div>
+    <script>
+        // ─── Leaflet Map ──────────────────────────────────────────
+    document.addEventListener('DOMContentLoaded', function () {
+
+    const map = L.map('reportMap').setView([23.8315, 91.2868], 13);
+
+    L.tileLayer(
+        'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+        {
+            attribution: '&copy; OpenStreetMap'
+        }
+    ).addTo(map);
+
+});
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        attribution: '&copy; OpenStreetMap',
+        maxZoom: 18
+    }).addTo(map);
+
+    const reports = [
+        { lat: 23.835, lng: 91.280, title: '#CR-9012 - Pothole',       status: 'In Progress', color: '#F59E0B' },
+        { lat: 23.828, lng: 91.290, title: '#CR-9010 - Drainage',      status: 'Pending',     color: '#DC2626' },
+        { lat: 23.840, lng: 91.295, title: '#CR-8702 - Water Leakage', status: 'In Progress', color: '#F59E0B' },
+        { lat: 23.825, lng: 91.275, title: '#CR-8650 - Street Light',  status: 'Resolved',    color: '#16A34A' },
+        { lat: 23.838, lng: 91.283, title: '#CR-9013 - Garbage',       status: 'Pending',     color: '#DC2626' },
+    ];
+
+    reports.forEach(r => {
+        const icon = L.divIcon({
+            html: `<div style="width:20px;height:20px;background:${r.color};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.3);"></div>`,
+            className: '',
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+        });
+        L.marker([r.lat, r.lng], { icon })
+            .addTo(map)
+            .bindPopup(`<div style="font-family:inherit;"><strong style="font-size:13px;">${r.title}</strong><br><span style="font-size:11px;color:${r.color};font-weight:600;">${r.status}</span></div>`);
+    });
+
+    setTimeout(() => map.invalidateSize(), 300);
+    </script>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 @endsection
