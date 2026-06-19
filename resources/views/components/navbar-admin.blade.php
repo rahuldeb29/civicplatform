@@ -1,15 +1,6 @@
-{{-- resources/views/components/navbar-admin.blade.php
-     Topbar for the Super Admin dashboard. --}}
-
 <header class="admin-topbar">
     {{-- Hamburger --}}
-    <button class="admin-hamburger" id="sidebarToggle" type="button" aria-label="Toggle sidebar">
-        <svg viewBox="0 0 24 24" fill="none" width="22" height="22">
-            <line x1="3" y1="6" x2="21" y2="6" stroke="#374151" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="12" x2="21" y2="12" stroke="#374151" stroke-width="2" stroke-linecap="round"/>
-            <line x1="3" y1="18" x2="21" y2="18" stroke="#374151" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-    </button>
+    
 
     {{-- Search --}}
     <div class="admin-search-wrapper">

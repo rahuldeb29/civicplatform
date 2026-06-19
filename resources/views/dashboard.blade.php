@@ -1019,135 +1019,19 @@
                     <h1>Citizen Dashboard</h1>
                     <p>Welcome back, {{ Auth::user()->name }}. You have 2 reports requiring your attention.</p>
                 </div>
-                <div class="page-header-actions">
-                    <button class="btn btn-outline">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                            <polyline points="7 10 12 15 17 10" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" stroke-linejoin="round" />
-                            <line x1="12" y1="15" x2="12" y2="3" stroke="currentColor" stroke-width="2"
-                                stroke-linecap="round" />
-                        </svg>
-                        Export Report History
-                    </button>
-                    <button class="btn btn-primary" onclick="window.location='{{ route('submit') }}'">
-                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <line x1="12" y1="5" x2="12" y2="19" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" />
-                            <line x1="5" y1="12" x2="19" y2="12" stroke="currentColor" stroke-width="2.5"
-                                stroke-linecap="round" />
-                        </svg>
-                        Submit New Report
+                
+            </div>
+
+            <div class="page-header-actions">
+                    
+                    <button class="btn btn-primary" onclick="window.location='{{ route('submit') }}'" style="font-weight: 600; font-size: 20px; height:60px; width: 100%;">
+                       
+                       + Submit New Report
                     </button>
                 </div>
-            </div>
 
             {{-- Stat Cards --}}
-            <div class="stat-cards">
-                {{-- Total Reports --}}
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">TOTAL REPORTS</span>
-                        <div class="stat-icon blue">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="4" y="4" width="16" height="16" rx="2" stroke="#1D4ED8" stroke-width="2" />
-                                <line x1="8" y1="9" x2="16" y2="9" stroke="#1D4ED8" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                                <line x1="8" y1="12" x2="16" y2="12" stroke="#1D4ED8" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                                <line x1="8" y1="15" x2="12" y2="15" stroke="#1D4ED8" stroke-width="1.5"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
-                    </div>
-
-                    <div class="stat-value">{{ $totalReports }}</div>
-                    <div class="stat-footer up">
-                        <span class="trend">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            </svg>
-                            0%
-                        </span>
-                        <span class="period">from last month</span>
-                    </div>
-                </div>
-
-                {{-- Pending Action --}}
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">PENDING ACTION</span>
-                        <div class="stat-icon orange">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="9" stroke="#D97706" stroke-width="2" />
-                                <polyline points="12 7 12 12 15 15" stroke="#D97706" stroke-width="2"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="stat-value">0</div>
-                    <div class="stat-footer down">
-                        <span class="trend">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                                <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            </svg>
-                            0%
-                        </span>
-                        <span class="period">from last month</span>
-                    </div>
-                </div>
-
-                {{-- In Progress --}}
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">IN PROGRESS</span>
-                        <div class="stat-icon teal">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="9" stroke="#0D9488" stroke-width="2" />
-                                <path d="M16 11a4 4 0 0 1-4 4H8" stroke="#0D9488" stroke-width="1.8"
-                                    stroke-linecap="round" />
-                                <path d="M12 8c.5 0 1 .1 1.5.2" stroke="#0D9488" stroke-width="1.8"
-                                    stroke-linecap="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="stat-value">{{ $inProgressReports }}</div>
-                    <div class="stat-footer up">
-                        <span class="trend">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            </svg>
-                            0
-                        </span>
-                        <span class="period">from last month</span>
-                    </div>
-                </div>
-
-                {{-- Resolved Cases --}}
-                <div class="stat-card">
-                    <div class="stat-header">
-                        <span class="stat-label">RESOLVED CASES</span>
-                        <div class="stat-icon green">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <circle cx="12" cy="12" r="9" stroke="#16A34A" stroke-width="2" />
-                                <path d="M8 12l3 3 5-5" stroke="#16A34A" stroke-width="2" stroke-linecap="round"
-                                    stroke-linejoin="round" />
-                            </svg>
-                        </div>
-                    </div>
-                    <div class="stat-value">{{ $resolvedReports }}</div>
-                    <div class="stat-footer up">
-                        <span class="trend">
-                            <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
-                                <path d="M18 15l-6-6-6 6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
-                            </svg>
-                            0%
-                        </span>
-                        <span class="period">from last month</span>
-                    </div>
-                </div>
-            </div>
+            
 
             {{-- Report History --}}
             <div class="card">

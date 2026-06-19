@@ -108,6 +108,7 @@
             height: 72px; min-height: 72px;
             background: #fff;
             border-bottom: 1px solid #E5E7EB;
+            margin-left: 260px;
         }
 
         .admin-hamburger {
