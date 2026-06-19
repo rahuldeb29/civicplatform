@@ -3,21 +3,20 @@
     {{-- Logo --}}
     <div class="sidebar-logo">
         <div class="logo-icon">
-            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <svg class="logo-svg" width="100" height="100" viewBox="0 0 100 100">
 
-                <!-- Background -->
-                <rect width="64" height="64" rx="14" fill="#1D4ED8" />
+    <rect width="100" height="100" rx="20" fill="#2563EB"/>
 
-                <!-- Location Pin -->
-                <path
-                    d="M32 14C24.82 14 19 19.82 19 27C19 37.5 32 50 32 50C32 50 45 37.5 45 27C45 19.82 39.18 14 32 14Z"
-                    fill="white" />
+    <path
+        class="heartbeat"
+        pathLength="100"
+        d="M20 50 L35 50 L42 35 L52 65 L62 50 L80 50"
+        stroke="white"
+        stroke-width="5"
+        fill="none"
+    />
 
-                <!-- Pulse Line -->
-                <path d="M23 31H28L31 25L34 36L37 29H41" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round"
-                    stroke-linejoin="round" />
-
-            </svg>
+</svg>
         </div>
         <div class="logo-text">
             <span class="logo-name">CivicPulse</span>
