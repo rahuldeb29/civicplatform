@@ -8,9 +8,20 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
     {{-- ─── Logo ─────────────────────────────────────────── --}}
     <div class="admin-logo">
         <div class="admin-logo-icon">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2C8 2 5 5 5 9c0 5.5 7 13 7 13s7-7.5 7-13c0-4-3-7-7-7z" fill="#2563EB" />
-                <circle cx="12" cy="9" r="2.5" fill="#fff" />
+            <svg width="34" height="34" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg">
+
+                <!-- Background -->
+                <rect width="64" height="64" rx="14" fill="#1D4ED8" />
+
+                <!-- Location Pin -->
+                <path
+                    d="M32 14C24.82 14 19 19.82 19 27C19 37.5 32 50 32 50C32 50 45 37.5 45 27C45 19.82 39.18 14 32 14Z"
+                    fill="white" />
+
+                <!-- Pulse Line -->
+                <path d="M23 31H28L31 25L34 36L37 29H41" stroke="#1D4ED8" stroke-width="2.5" stroke-linecap="round"
+                    stroke-linejoin="round" />
+
             </svg>
         </div>
         <div class="admin-logo-text">

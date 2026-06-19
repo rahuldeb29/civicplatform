@@ -1280,9 +1280,14 @@
                     <span class="case-tracker-title">Case Tracker</span>
                 </div>
 
-                <div class="active-case">
-                    <div class="active-label">CURRENT ACTIVE</div>
-                    <div class="active-id">#CR-9012 - Pothole Repair</div>
+                 <div class="current-active-box">
+                    <div class="current-active-label">Current Active</div>
+                    @if($activeReport)
+                        <a href="{{ route('show', $activeReport->id) }}" class="current-active-id">
+                            #CP-{{ $activeReport->id }}
+                            - {{ $activeReport->title }}
+                        </a>
+                    @endif
                 </div>
 
                 <div class="timeline">

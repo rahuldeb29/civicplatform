@@ -1090,9 +1090,9 @@
     {{-- ══ PAGE HEADER ══════════════════════════════════════════ --}}
     <div class="page-header">
         <div>
-            <h1>Dashboard</h1>
+            <h1> Admin Dashboard</h1>
             <p>
-                Welcome back, Admin. You have
+                Welcome back, Super Admin. You have
                 <strong>{{ $attentionCount }}</strong>
                 reports requiring your attention.
             </p>
@@ -1231,7 +1231,7 @@
                                 <span class="legend-name">Public Works (PWD)</span>
                             </div>
                             <div class="legend-right">
-                                <span class="legend-count">399</span>
+                                <span class="legend-count">3</span>
                                 <span class="legend-pct">32%</span>
                             </div>
                         </div>
@@ -1241,7 +1241,7 @@
                                 <span class="legend-name">Water Supply</span>
                             </div>
                             <div class="legend-right">
-                                <span class="legend-count">299</span>
+                                <span class="legend-count">4</span>
                                 <span class="legend-pct">24%</span>
                             </div>
                         </div>
@@ -1251,7 +1251,7 @@
                                 <span class="legend-name">Electricity</span>
                             </div>
                             <div class="legend-right">
-                                <span class="legend-count">225</span>
+                                <span class="legend-count">2</span>
                                 <span class="legend-pct">18%</span>
                             </div>
                         </div>
@@ -1261,7 +1261,7 @@
                                 <span class="legend-name">Sanitation</span>
                             </div>
                             <div class="legend-right">
-                                <span class="legend-count">200</span>
+                                <span class="legend-count">3</span>
                                 <span class="legend-pct">16%</span>
                             </div>
                         </div>
@@ -1271,7 +1271,7 @@
                                 <span class="legend-name">Others</span>
                             </div>
                             <div class="legend-right">
-                                <span class="legend-count">125</span>
+                                <span class="legend-count">3</span>
                                 <span class="legend-pct">10%</span>
                             </div>
                         </div>
@@ -1692,7 +1692,7 @@
             data: {
                 labels: ['Public Works', 'Water Supply', 'Electricity', 'Sanitation', 'Others'],
                 datasets: [{
-                    data: [399, 299, 225, 200, 125],
+                    data: [4, 2, 3, 3, 3],
                     backgroundColor: ['#2563EB', '#06B6D4', '#F59E0B', '#ff826f', '#9CA3AF'],
                     borderWidth: 2,
                     borderColor: '#fff',
@@ -1726,7 +1726,7 @@
                 labels: ['Jun 12', 'Jun 19', 'Jun 26', 'Jul 2', 'Jul 9', 'Jul 16'],
                 datasets: [{
                     label: 'Reports',
-                    data: [130, 240, 200, 330, 310, 340],
+                    data: [74, 34, 69, 41, 10, 4],
                     borderColor: '#2563EB',
                     backgroundColor: grad,
                     fill: true,

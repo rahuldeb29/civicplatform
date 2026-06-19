@@ -11,6 +11,7 @@ use App\Models\User;
 
 class AdminDashboardController extends Controller
 {
+    
     public function index()
     {
         $user = Auth::id();
@@ -53,6 +54,9 @@ class AdminDashboardController extends Controller
             ->where('status', 'resolved')
             ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
             ->count();
+        
+        
+
 
         // ── Trend helpers ──────────────────────────────────────────
         $totalTrend = $this->calcTrend($totalReports, $lastMonthTotal);
