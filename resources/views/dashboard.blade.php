@@ -300,8 +300,8 @@
         }
 
         .badge-critical {
-            background: #FEE2E2;
-            color: #B91C1C;
+            background: #ff0000;
+            color: #fff;
             border: 1px solid #FCA5A5;
         }
 
@@ -1000,6 +1000,148 @@
             color: #374151;
             font-weight: 500;
         }
+
+
+         .tracker-body {
+            padding: 0 24px 24px;
+        }
+
+        .current-active-box {
+            padding: 14px 0 18px;
+            border-top: 1px solid #F3F4F6;
+            border-bottom: 1px solid #F3F4F6;
+            margin-bottom: 20px;
+        }
+
+        .current-active-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: #9CA3AF;
+            text-transform: uppercase;
+            letter-spacing: .8px;
+        }
+
+        .current-active-id {
+            display: block;
+            font-size: 15px;
+            font-weight: 600;
+            color: #2563EB;
+            margin-top: 4px;
+            text-decoration: none;
+        }
+
+        .current-active-id:hover {
+            text-decoration: underline;
+        }
+
+        /* Timeline */
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .timeline-item {
+            display: flex;
+            gap: 14px;
+            align-items: flex-start;
+            position: relative;
+            padding-bottom: 18px;
+        }
+
+        .timeline-item:last-child {
+            padding-bottom: 0;
+        }
+
+        .timeline-item:not(:last-child) .tl-dot-wrap::after {
+            content: '';
+            position: absolute;
+            top: 22px;
+            left: 9px;
+            width: 2px;
+            height: calc(100% + 0px);
+            background: #E5E7EB;
+        }
+
+        .timeline-item.done:not(:last-child) .tl-dot-wrap::after {
+            background: #16A34A;
+        }
+
+        .tl-dot-wrap {
+            position: relative;
+            flex-shrink: 0;
+        }
+
+        .tl-dot {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+            background: #fff;
+            z-index: 1;
+            position: relative;
+        }
+
+        .tl-done {
+            background: #16A34A;
+        }
+
+        .tl-done svg {
+            width: 11px;
+            height: 11px;
+            color: #fff;
+        }
+
+        .tl-active {
+            background: #fff;
+            border: 2px solid #2563EB;
+        }
+
+        .tl-active::after {
+            content: '';
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+            background: #2563EB;
+        }
+
+        .tl-pending {
+            background: #fff;
+            border: 2px solid #D1D5DB;
+        }
+
+        .tl-content {
+            flex: 1;
+            padding-top: 0;
+        }
+
+        .tl-content h4 {
+            font-size: 14px;
+            font-weight: 600;
+            color: #111827;
+            margin: 0;
+        }
+
+        .tl-content p {
+            font-size: 12.5px;
+            color: #9CA3AF;
+            margin: 2px 0 0;
+        }
+
+        .timeline-item.pending .tl-content h4 {
+            color: #6B7280;
+            font-weight: 500;
+        }
+
+
+
+
+
+         .btn-action { padding: 0.5rem 1rem; background-color: #4299e1; color: white; border-radius: 0.375rem; font-size: 0.8125rem; font-weight: 500; text-decoration: none; transition: background-color 0.2s; display: inline-flex; align-items: center; gap: 0.25rem; }
+    .btn-action:hover { background-color: #3182ce; }
     </style>
 @endpush
 
@@ -1017,7 +1159,7 @@
             <div class="page-header">
                 <div class="page-header-text">
                     <h1>Citizen Dashboard</h1>
-                    <p>Welcome back, {{ Auth::user()->name }}. You have 2 reports requiring your attention.</p>
+                    <p>Welcome back, {{ Auth::user()->name }}. You have {{ $pendingReports }} reports requiring your attention.</p>
                 </div>
                 
             </div>
@@ -1130,9 +1272,9 @@
                                 </td>
 
                                 <td>
-                                    <span class="status-pill status-progress">
-                                        {{ strtoupper($report->status) }}
-                                    </span>
+                                    <span class="status-pill status-{{ strtolower($report->status) }}">
+    {{ strtoupper(str_replace('_',' ',$report->status)) }}
+</span>
                                 </td>
 
                                 <td>
@@ -1143,15 +1285,12 @@
                                 </td>
 
                                 <td>
-                                    <a href="{{ route('show', ['report' => $report->id]) }}"
-   class="view-link">
-                                        View Details
-                                        <svg viewBox="0 0 24 24" fill="none">
-                                            <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2"
-                                                stroke-linecap="round" />
-                                        </svg>
-                                    </a>
-                                </td>
+                                <a href="{{ route('show', ['report' => $report->id]) }}" class="btn-action">
+                                    <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    View
+                                </a>
+                            </td>
+                            
                             </tr>
                         @empty
                             <tr>
@@ -1164,27 +1303,14 @@
                 </table>
 
                 <div class="table-footer">
-                    <span class="table-showing">Showing 4 of 24 records</span>
-                    <div class="pagination">
-                        <a href="#" class="page-btn nav-pg">
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                                <path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                            Previous
-                        </a>
-                        <a href="#" class="page-btn active">1</a>
-                        <a href="#" class="page-btn">2</a>
-                        <a href="#" class="page-btn">3</a>
-                        <span class="page-btn" style="border:none;cursor:default;">...</span>
-                        <a href="#" class="page-btn">6</a>
-                        <a href="#" class="page-btn nav-pg">
-                            Next
-                            <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
-                                <path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                            </svg>
-                        </a>
-                    </div>
-                </div>
+    <span class="table-showing">
+        Showing {{ $reports->firstItem() }}
+        to {{ $reports->lastItem() }}
+        of {{ $reports->total() }} records
+    </span>
+
+    {{ $reports->links() }}
+</div>
             </div>
 
             {{-- Bottom Row: Notifications + Map --}}
@@ -1271,167 +1397,173 @@
             </div>
 
             {{-- Case Tracker --}}
-            <div class="case-tracker">
-                <div class="case-tracker-header">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
-                        <path d="M12 8v4l3 3" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
-                    <span class="case-tracker-title">Case Tracker</span>
-                </div>
+            @php
+    $timelineSteps = [
+        'submitted' => [
+            'title' => 'Submitted',
+            'description' => $activeReport?->created_at?->format('M d, Y • h:i A')
+        ],
+        'assigned' => [
+            'title' => 'Assigned',
+            'description' => 'Assigned to Department'
+        ],
+        'in_progress' => [
+            'title' => 'In Progress',
+            'description' => 'Work in progress'
+        ],
+        'assessment_complete' => [
+            'title' => 'Assessment Complete',
+            'description' => 'Assessment completed'
+        ],
+        'resolved' => [
+            'title' => 'Resolved',
+            'description' => 'Issue resolved'
+        ],
+        'closed' => [
+            'title' => 'Closed',
+            'description' => 'Case closed'
+        ],
+    ];
 
-                 <div class="current-active-box">
-                    <div class="current-active-label">Current Active</div>
-                    @if($activeReport)
-                        <a href="{{ route('show', $activeReport->id) }}" class="current-active-id">
-                            #CP-{{ $activeReport->id }}
-                            - {{ $activeReport->title }}
-                        </a>
+    $currentStep = array_search(
+        strtolower($activeReport?->status ?? 'submitted'),
+        array_keys($timelineSteps)
+    );
+
+    if ($currentStep === false) {
+        $currentStep = 0;
+    }
+@endphp
+
+<div class="timeline">
+
+    @foreach($timelineSteps as $key => $step)
+
+        @php
+            $index = array_search($key, array_keys($timelineSteps));
+
+            if ($index < $currentStep) {
+                $class = 'done';
+            } elseif ($index == $currentStep) {
+                $class = 'active';
+            } else {
+                $class = 'pending';
+            }
+        @endphp
+
+        <div class="timeline-item {{ $class }}">
+
+            <div class="tl-dot-wrap">
+
+                @if($class === 'done')
+                    <div class="tl-dot tl-done">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path
+                                d="M20 6L9 17l-5-5"
+                                stroke="currentColor"
+                                stroke-width="3"
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                            />
+                        </svg>
+                    </div>
+
+                @elseif($class === 'active')
+                    <div class="tl-dot tl-active"></div>
+
+                @else
+                    <div class="tl-dot tl-pending"></div>
+                @endif
+
+            </div>
+
+            <div class="tl-content">
+                <h4>{{ $step['title'] }}</h4>
+
+                <p>
+                    @if($class === 'pending')
+                        Pending
+                    @else
+                        {{ $step['description'] }}
                     @endif
-                </div>
-
-                <div class="timeline">
-
-                    {{-- Submitted (done) --}}
-                    <div class="timeline-step">
-                        <div class="step-dot-wrap">
-                            <div class="step-dot done">
-                                <svg viewBox="0 0 24 24" fill="none">
-                                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                            <div class="step-line done-line"></div>
-                        </div>
-                        <div class="step-content">
-                            <div class="step-name">Submitted</div>
-                            <div class="step-detail">Oct 24, 2023 • 09:12 AM</div>
-                        </div>
-                    </div>
-
-                    {{-- Assigned (done) --}}
-                    <div class="timeline-step">
-                        <div class="step-dot-wrap">
-                            <div class="step-dot done">
-                                <svg viewBox="0 0 24 24" fill="none">
-                                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="2.5"
-                                        stroke-linecap="round" stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                            <div class="step-line done-line"></div>
-                        </div>
-                        <div class="step-content">
-                            <div class="step-name">Assigned</div>
-                            <div class="step-detail">Public Works Dept • Oct 24</div>
-                        </div>
-                    </div>
-
-                    {{-- In Progress (active) --}}
-                    <div class="timeline-step">
-                        <div class="step-dot-wrap">
-                            <div class="step-dot active"
-                                style="border:2px solid #1D4ED8;background:#EFF6FF;display:flex;align-items:center;justify-content:center;">
-                                <div class="active-inner"
-                                    style="width:8px;height:8px;background:#1D4ED8;border-radius:50%;"></div>
-                            </div>
-                            <div class="step-line"></div>
-                        </div>
-                        <div class="step-content">
-                            <div class="step-name">In Progress</div>
-                            <div class="step-detail active-detail">Crew working on site</div>
-                        </div>
-                    </div>
-
-                    {{-- Assessment Complete (pending) --}}
-                    <div class="timeline-step">
-                        <div class="step-dot-wrap">
-                            <div class="step-dot pending"
-                                style="border:2px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;">
-                                <div style="width:8px;height:8px;background:#D1D5DB;border-radius:50%;"></div>
-                            </div>
-                            <div class="step-line"></div>
-                        </div>
-                        <div class="step-content">
-                            <div class="step-name pending-text">Assessment Complete</div>
-                            <div class="step-detail">Pending</div>
-                        </div>
-                    </div>
-
-                    {{-- Resolved (pending) --}}
-                    <div class="timeline-step">
-                        <div class="step-dot-wrap">
-                            <div class="step-dot pending"
-                                style="border:2px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;">
-                                <div style="width:8px;height:8px;background:#D1D5DB;border-radius:50%;"></div>
-                            </div>
-                            <div class="step-line"></div>
-                        </div>
-                        <div class="step-content">
-                            <div class="step-name pending-text">Resolved</div>
-                            <div class="step-detail">Pending</div>
-                        </div>
-                    </div>
-
-                    {{-- Closed (pending) --}}
-                    <div class="timeline-step">
-                        <div class="step-dot-wrap">
-                            <div class="step-dot pending"
-                                style="border:2px solid #D1D5DB;background:#fff;display:flex;align-items:center;justify-content:center;">
-                                <div style="width:8px;height:8px;background:#D1D5DB;border-radius:50%;"></div>
-                            </div>
-                        </div>
-                        <div class="step-content">
-                            <div class="step-name pending-text">Closed</div>
-                            <div class="step-detail">Pending</div>
-                        </div>
-                    </div>
-
-                </div>
+                </p>
             </div>
 
         </div>
-    </div>
-    <script>
-        // ─── Leaflet Map ──────────────────────────────────────────
-    document.addEventListener('DOMContentLoaded', function () {
 
-    const map = L.map('reportMap').setView([23.8315, 91.2868], 13);
+    @endforeach
+
+</div>
+
+        </div>
+    </div>
+   <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const reports = @json($mapReports);
+
+    const map = L.map('reportMap').setView([23.856930489407134, 91.29], 16);
 
     L.tileLayer(
         'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
         {
-            attribution: '&copy; OpenStreetMap'
+            attribution: '&copy; OpenStreetMap',
+            maxZoom: 24
         }
     ).addTo(map);
 
-});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; OpenStreetMap',
-        maxZoom: 18
-    }).addTo(map);
+    reports.forEach(report => {
 
-    const reports = [
-        { lat: 23.835, lng: 91.280, title: '#CR-9012 - Pothole',       status: 'In Progress', color: '#F59E0B' },
-        { lat: 23.828, lng: 91.290, title: '#CR-9010 - Drainage',      status: 'Pending',     color: '#DC2626' },
-        { lat: 23.840, lng: 91.295, title: '#CR-8702 - Water Leakage', status: 'In Progress', color: '#F59E0B' },
-        { lat: 23.825, lng: 91.275, title: '#CR-8650 - Street Light',  status: 'Resolved',    color: '#16A34A' },
-        { lat: 23.838, lng: 91.283, title: '#CR-9013 - Garbage',       status: 'Pending',     color: '#DC2626' },
-    ];
+        let color = '#2563EB';
 
-    reports.forEach(r => {
+        if (report.status === 'resolved')
+            color = '#16A34A';
+
+        if (report.status === 'pending' || report.status === 'submitted')
+            color = '#DC2626';
+
+        if (report.status === 'in_progress')
+            color = '#F59E0B';
+
         const icon = L.divIcon({
-            html: `<div style="width:20px;height:20px;background:${r.color};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.3);"></div>`,
-            className: '',
-            iconSize: [20, 20],
-            iconAnchor: [10, 10]
+            html: `
+                <div style="
+                    width:18px;
+                    height:18px;
+                    background:${color};
+                    border-radius:50%;
+                    border:3px solid white;
+                    box-shadow:0 0 5px rgba(0,0,0,.3);
+                "></div>
+            `,
+            className: ''
         });
-        L.marker([r.lat, r.lng], { icon })
-            .addTo(map)
-            .bindPopup(`<div style="font-family:inherit;"><strong style="font-size:13px;">${r.title}</strong><br><span style="font-size:11px;color:${r.color};font-weight:600;">${r.status}</span></div>`);
+
+        L.marker(
+            [report.latitude, report.longitude],
+            { icon: icon }
+        )
+        .addTo(map)
+        .bindPopup(`
+            <strong>${report.title}</strong><br>
+            Status: ${report.status}
+        `);
     });
 
-    setTimeout(() => map.invalidateSize(), 300);
-    </script>
+    // Focus map on first report
+    if (reports.length > 0) {
+        map.setView(
+            [reports[0].latitude, reports[0].longitude],
+            15
+        );
+    }
+
+    setTimeout(() => {
+        map.invalidateSize();
+    }, 300);
+
+});
+</script>
 
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
 @endsection

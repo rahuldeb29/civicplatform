@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         /* ═══════════════════════════════════════════════════════════
-           BASE & LAYOUT
-        ═══════════════════════════════════════════════════════════ */
+                               BASE & LAYOUT
+                            ═══════════════════════════════════════════════════════════ */
         body {
             margin: 0;
             padding: 0;
@@ -78,8 +78,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           PAGE HEADER
-        ═══════════════════════════════════════════════════════════ */
+                               PAGE HEADER
+                            ═══════════════════════════════════════════════════════════ */
         .page-header {
             display: flex;
             align-items: flex-start;
@@ -159,8 +159,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           STAT CARDS
-        ═══════════════════════════════════════════════════════════ */
+                               STAT CARDS
+                            ═══════════════════════════════════════════════════════════ */
         .stat-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -265,8 +265,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           CHART ROW
-        ═══════════════════════════════════════════════════════════ */
+                               CHART ROW
+                            ═══════════════════════════════════════════════════════════ */
         .chart-row {
             display: grid;
             grid-template-columns: 400px 1fr;
@@ -392,8 +392,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           SECTION CARD (used by table / notifications / map / etc)
-        ═══════════════════════════════════════════════════════════ */
+                               SECTION CARD (used by table / notifications / map / etc)
+                            ═══════════════════════════════════════════════════════════ */
         .section-card {
             background: #fff;
             border: 1px solid #E5E7EB;
@@ -461,8 +461,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           TABLE
-        ═══════════════════════════════════════════════════════════ */
+                               TABLE
+                            ═══════════════════════════════════════════════════════════ */
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -536,6 +536,8 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: .3px;
+            background: #B91C1C;
+            color: #fff;
         }
 
         .pill-priority-high {
@@ -546,6 +548,11 @@
         .pill-priority-medium {
             background: #FEF3C7;
             color: #B45309;
+        }
+
+        .pill-priority {
+            background: #B91C1C;
+            color: #fff;
         }
 
         .pill-priority-low {
@@ -661,8 +668,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           MID ROW : NOTIFICATIONS + MAP
-        ═══════════════════════════════════════════════════════════ */
+                               MID ROW : NOTIFICATIONS + MAP
+                            ═══════════════════════════════════════════════════════════ */
         .mid-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -765,8 +772,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-           BOTTOM ROW : SUMMARY + CASE TRACKER
-        ═══════════════════════════════════════════════════════════ */
+                               BOTTOM ROW : SUMMARY + CASE TRACKER
+                            ═══════════════════════════════════════════════════════════ */
         .bottom-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -955,6 +962,12 @@
             font-weight: 500;
         }
 
+        .badge-critical {
+            background: #ff0000;
+            color: #fff;
+            border: 1px solid #FCA5A5;
+        }
+
 
 
         /* ─── Stat Cards ────────────────────────────────────────── */
@@ -962,6 +975,7 @@
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 16px;
+            margin-bottom: 15px;
         }
 
         .stat-card {
@@ -1051,9 +1065,30 @@
         }
 
 
+        .btn-action {
+            padding: 0.5rem 1rem;
+            background-color: #4299e1;
+            color: white;
+            border-radius: 0.375rem;
+            font-size: 0.8125rem;
+            font-weight: 500;
+            text-decoration: none;
+            transition: background-color 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+
+        .btn-action:hover {
+            background-color: #3182ce;
+        }
+
+
+
+
         /* ═══════════════════════════════════════════════════════════
-           RESPONSIVE
-        ═══════════════════════════════════════════════════════════ */
+                               RESPONSIVE
+                            ═══════════════════════════════════════════════════════════ */
         @media (max-width: 1200px) {
             .stat-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1140,7 +1175,7 @@
                 </div>
             </div>
             <div class="stat-value">{{ $pendingReports }}</div>
-            <div class="stat-footer down">
+            <div class="stat-footer up">
                 <span class="trend">
                     <svg width="12" height="12" viewBox="0 0 24 24" fill="none">
                         <path d="M6 9l6 6 6-6" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" />
@@ -1225,56 +1260,33 @@
                         </div>
                     </div>
                     <div class="donut-legend">
-                        <div class="legend-row">
-                            <div class="legend-left">
-                                <span class="legend-dot" style="background:#4C82FF;"></span>
-                                <span class="legend-name">Public Works (PWD)</span>
+                        @php
+                            $colors = [
+                                'PWD' => '#2563EB',
+                                'Water Supply' => '#06B6D4',
+                                'Electricity' => '#F59E0B',
+                                'Sanitation' => '#FF826F',
+                                'Others' => '#9CA3AF'
+                            ];
+                        @endphp
+
+                        @foreach($departmentCounts as $department => $count)
+                            <div class="legend-row">
+                                <div class="legend-left">
+                                    <span class="legend-dot" style="background:{{ $colors[$department] }}"></span>
+
+                                    <span class="legend-name">{{ $department }}</span>
+                                </div>
+
+                                <div class="legend-right">
+                                    <span class="legend-count">{{ $count }}</span>
+
+                                    <span class="legend-pct">
+                                        {{ $totalReports > 0 ? round(($count / $totalReports) * 100) : 0 }}%
+                                    </span>
+                                </div>
                             </div>
-                            <div class="legend-right">
-                                <span class="legend-count">3</span>
-                                <span class="legend-pct">32%</span>
-                            </div>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-left">
-                                <span class="legend-dot" style="background:#06B6D4;"></span>
-                                <span class="legend-name">Water Supply</span>
-                            </div>
-                            <div class="legend-right">
-                                <span class="legend-count">4</span>
-                                <span class="legend-pct">24%</span>
-                            </div>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-left">
-                                <span class="legend-dot" style="background:#FFE54C;"></span>
-                                <span class="legend-name">Electricity</span>
-                            </div>
-                            <div class="legend-right">
-                                <span class="legend-count">2</span>
-                                <span class="legend-pct">18%</span>
-                            </div>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-left">
-                                <span class="legend-dot" style="background:#FF826F;"></span>
-                                <span class="legend-name">Sanitation</span>
-                            </div>
-                            <div class="legend-right">
-                                <span class="legend-count">3</span>
-                                <span class="legend-pct">16%</span>
-                            </div>
-                        </div>
-                        <div class="legend-row">
-                            <div class="legend-left">
-                                <span class="legend-dot" style="background:#9CA3AF;"></span>
-                                <span class="legend-name">Others</span>
-                            </div>
-                            <div class="legend-right">
-                                <span class="legend-count">3</span>
-                                <span class="legend-pct">10%</span>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
                 </div>
             </div>
@@ -1315,21 +1327,46 @@
                 </svg>
                 Report History
             </div>
-            <div class="section-actions">
-                <button class="btn-outline">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z" stroke="currentColor" stroke-width="2"
-                            stroke-linecap="round" stroke-linejoin="round" />
-                    </svg>
-                    Filter
-                </button>
-                <button class="btn-outline">
-                    <svg viewBox="0 0 24 24" fill="none">
-                        <path d="M3 6h18M6 12h12M10 18h4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                    </svg>
+
+            <span class="text-muted">
+                Sorted by:
+                {{ ucfirst(request('sort', 'latest')) }}
+            </span>
+
+
+
+            <div class="dropdown">
+                <button class="btn-outline dropdown-toggle" data-bs-toggle="dropdown">
                     Sort
                 </button>
+
+                <ul class="dropdown-menu">
+                    <li>
+                        <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'latest']) }}">
+                            Latest First
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'oldest']) }}">
+                            Oldest First
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'priority']) }}">
+                            Priority
+                        </a>
+                    </li>
+
+                    <li>
+                        <a class="dropdown-item" href="{{ request()->fullUrlWithQuery(['sort' => 'status']) }}">
+                            Status
+                        </a>
+                    </li>
+                </ul>
             </div>
+
         </div>
 
         <div style="overflow-x:auto;">
@@ -1385,9 +1422,34 @@
                             </td>
 
                             <td>
-                                <span class="pill pill-status-{{ strtolower($report->status) }}">
-                                    {{ ucfirst(str_replace('_', ' ', $report->status)) }}
-                                </span>
+                                <form action="{{ route('admin.reports.updateStatus', $report->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+
+                                    <select name="status" onchange="this.form.submit()" class="status-select">
+
+                                        <option value="submitted" {{ $report->status == 'submitted' ? 'selected' : '' }}>
+                                            Submitted
+                                        </option>
+
+                                        <option value="assigned" {{ $report->status == 'assigned' ? 'selected' : '' }}>
+                                            Assigned
+                                        </option>
+
+                                        <option value="in_progress" {{ $report->status == 'in_progress' ? 'selected' : '' }}>
+                                            In Progress
+                                        </option>
+
+                                        <option value="resolved" {{ $report->status == 'resolved' ? 'selected' : '' }}>
+                                            Resolved
+                                        </option>
+
+                                        <option value="closed" {{ $report->status == 'closed' ? 'selected' : '' }}>
+                                            Closed
+                                        </option>
+
+                                    </select>
+                                </form>
                             </td>
 
                             <td>
@@ -1399,7 +1461,8 @@
                             </td>
 
                             <td>
-                                <a href="{{ route('show', $report->id) }}" class="view-link">
+                                <a href="{{ route('admin.reports.show', $report->id) }}" class="btn-action">
+                                    <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
                                     View
                                 </a>
                             </td>
@@ -1416,15 +1479,15 @@
         </div>
 
         <div class="pagination">
-    <div class="pagination-info">
-        Showing {{ $reports->firstItem() }} to {{ $reports->lastItem() }}
-        of {{ $reports->total() }} records
-    </div>
+            <div class="pagination-info">
+                Showing {{ $reports->firstItem() }} to {{ $reports->lastItem() }}
+                of {{ $reports->total() }} records
+            </div>
 
-    <div>
-        {{ $reports->links() }}
-    </div>
-</div>
+            <div>
+                {{ $reports->links() }}
+            </div>
+        </div>
     </div>
 
     {{-- ══ MID ROW : NOTIFICATIONS + MAP ════════════════════════ --}}
@@ -1585,96 +1648,97 @@
             </div>
         </div>
 
-        <div class="section-card" style="margin-bottom:0;">
-            <div class="section-head">
-                <div class="section-title">
-                    <svg class="title-icon" viewBox="0 0 24 24" fill="none">
-                        <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
-                        <polyline points="12 7 12 12 15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                            stroke-linejoin="round" />
-                    </svg>
-                    Case Tracker
-                </div>
-            </div>
+        @php
+            $timelineSteps = [
+                'submitted' => [
+                    'title' => 'Submitted',
+                    'description' => $activeReport?->created_at?->format('M d, Y • h:i A')
+                ],
+                'assigned' => [
+                    'title' => 'Assigned',
+                    'description' => 'Assigned to Department'
+                ],
+                'in_progress' => [
+                    'title' => 'In Progress',
+                    'description' => 'Work in progress'
+                ],
+                'assessment_complete' => [
+                    'title' => 'Assessment Complete',
+                    'description' => 'Assessment completed'
+                ],
+                'resolved' => [
+                    'title' => 'Resolved',
+                    'description' => 'Issue resolved'
+                ],
+                'closed' => [
+                    'title' => 'Closed',
+                    'description' => 'Case closed'
+                ],
+            ];
 
-            <div class="tracker-body">
-                <div class="current-active-box">
-                    <div class="current-active-label">Current Active</div>
-                    @if($activeReport)
-                        <a href="{{ route('show', $activeReport->id) }}" class="current-active-id">
-                            #CP-{{ $activeReport->id }}
-                            - {{ $activeReport->title }}
-                        </a>
-                    @endif
-                </div>
+            $currentStep = array_search(
+                strtolower($activeReport?->status ?? 'submitted'),
+                array_keys($timelineSteps)
+            );
 
-                <div class="timeline">
-                    <div class="timeline-item done">
-                        <div class="tl-dot-wrap">
+            if ($currentStep === false) {
+                $currentStep = 0;
+            }
+        @endphp
+
+        <div class="timeline">
+
+            @foreach($timelineSteps as $key => $step)
+
+                @php
+                    $index = array_search($key, array_keys($timelineSteps));
+
+                    if ($index < $currentStep) {
+                        $class = 'done';
+                    } elseif ($index == $currentStep) {
+                        $class = 'active';
+                    } else {
+                        $class = 'pending';
+                    }
+                @endphp
+
+                <div class="timeline-item {{ $class }}">
+
+                    <div class="tl-dot-wrap">
+
+                        @if($class === 'done')
                             <div class="tl-dot tl-done">
                                 <svg viewBox="0 0 24 24" fill="none">
                                     <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round"
                                         stroke-linejoin="round" />
                                 </svg>
                             </div>
-                        </div>
-                        <div class="tl-content">
-                            <h4>Submitted</h4>
-                            <p>Oct 24, 2023 • 09:12 AM</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item done">
-                        <div class="tl-dot-wrap">
-                            <div class="tl-dot tl-done">
-                                <svg viewBox="0 0 24 24" fill="none">
-                                    <path d="M20 6L9 17l-5-5" stroke="currentColor" stroke-width="3" stroke-linecap="round"
-                                        stroke-linejoin="round" />
-                                </svg>
-                            </div>
-                        </div>
-                        <div class="tl-content">
-                            <h4>Assigned</h4>
-                            <p>Public Works Dept • Oct 24</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item active">
-                        <div class="tl-dot-wrap">
+
+                        @elseif($class === 'active')
                             <div class="tl-dot tl-active"></div>
-                        </div>
-                        <div class="tl-content">
-                            <h4>In Progress</h4>
-                            <p>Crew working on site</p>
-                        </div>
-                    </div>
-                    <div class="timeline-item pending">
-                        <div class="tl-dot-wrap">
+
+                        @else
                             <div class="tl-dot tl-pending"></div>
-                        </div>
-                        <div class="tl-content">
-                            <h4>Assessment Complete</h4>
-                            <p>Pending</p>
-                        </div>
+                        @endif
+
                     </div>
-                    <div class="timeline-item pending">
-                        <div class="tl-dot-wrap">
-                            <div class="tl-dot tl-pending"></div>
-                        </div>
-                        <div class="tl-content">
-                            <h4>Resolved</h4>
-                            <p>Pending</p>
-                        </div>
+
+                    <div class="tl-content">
+                        <h4>{{ $step['title'] }}</h4>
+
+                        <p>
+                            @if($class === 'pending')
+                                Pending
+                            @else
+                                {{ $step['description'] }}
+                            @endif
+                        </p>
                     </div>
-                    <div class="timeline-item pending">
-                        <div class="tl-dot-wrap">
-                            <div class="tl-dot tl-pending"></div>
-                        </div>
-                        <div class="tl-content">
-                            <h4>Closed</h4>
-                            <p>Pending</p>
-                        </div>
-                    </div>
+
                 </div>
-            </div>
+
+            @endforeach
+
         </div>
 
     </div>
@@ -1690,13 +1754,16 @@
         new Chart(deptCtx, {
             type: 'doughnut',
             data: {
-                labels: ['Public Works', 'Water Supply', 'Electricity', 'Sanitation', 'Others'],
+                labels: @json(array_keys($departmentCounts)),
                 datasets: [{
-                    data: [4, 2, 3, 3, 3],
-                    backgroundColor: ['#2563EB', '#06B6D4', '#F59E0B', '#ff826f', '#9CA3AF'],
-                    borderWidth: 2,
-                    borderColor: '#fff',
-                    hoverOffset: 4,
+                    data: @json(array_values($departmentCounts)),
+                    backgroundColor: [
+                        '#2563EB',
+                        '#06B6D4',
+                        '#F59E0B',
+                        '#FF826F',
+                        '#9CA3AF'
+                    ]
                 }]
             },
             options: {
@@ -1723,20 +1790,14 @@
         new Chart(lineCtx, {
             type: 'line',
             data: {
-                labels: ['Jun 12', 'Jun 19', 'Jun 26', 'Jul 2', 'Jul 9', 'Jul 16'],
+                labels: @json($chartLabels),
                 datasets: [{
                     label: 'Reports',
-                    data: [74, 34, 69, 41, 10, 4],
+                    data: @json($chartData),
                     borderColor: '#2563EB',
                     backgroundColor: grad,
                     fill: true,
-                    tension: 0.4,
-                    pointBackgroundColor: '#fff',
-                    pointBorderColor: '#2563EB',
-                    pointBorderWidth: 2,
-                    pointRadius: 4,
-                    pointHoverRadius: 6,
-                    borderWidth: 2.5,
+                    tension: 0.4
                 }]
             },
             options: {
@@ -1746,17 +1807,17 @@
                 scales: {
                     y: {
                         beginAtZero: true,
-                        max: 400,
+                        max: 50,
                         ticks: {
                             stepSize: 100,
                             color: '#9CA3AF',
-                            font: { size: 11.5, family: "'Inter', sans-serif" }
+                            font: { size: 13.5, family: "'Inter', sans-serif" }
                         },
                         grid: { color: '#F3F4F6', drawBorder: false },
                         border: { display: false }
                     },
                     x: {
-                        ticks: { color: '#9CA3AF', font: { size: 11.5, family: "'Inter', sans-serif" } },
+                        ticks: { color: '#9CA3AF', font: { size: 13.5, family: "'Inter', sans-serif" } },
                         grid: { display: false },
                         border: { display: false }
                     }
@@ -1765,37 +1826,62 @@
         });
 
         /* ── Leaflet Map ───────────────────────────────────────── */
-        const map = L.map('reportMap').setView([23.8315, 91.2868], 13);
+        const map = L.map('reportMap').setView([23.856946113678067, 91.29741994402143], 13);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
             attribution: '&copy; OpenStreetMap',
             maxZoom: 18
         }).addTo(map);
 
-        const reports = [
-            { lat: 23.835, lng: 91.280, title: '#CR-9012 - Pothole', status: 'In Progress', color: '#D97706' },
-            { lat: 23.828, lng: 91.290, title: '#CR-9010 - Drainage', status: 'Pending', color: '#DC2626' },
-            { lat: 23.840, lng: 91.295, title: '#CR-8702 - Water Leakage', status: 'In Progress', color: '#D97706' },
-            { lat: 23.825, lng: 91.275, title: '#CR-8650 - Street Light', status: 'Resolved', color: '#16A34A' },
-            { lat: 23.838, lng: 91.283, title: '#CR-9013 - Garbage', status: 'Pending', color: '#DC2626' },
-        ];
+        const reports = @json($mapReports);
 
-        reports.forEach(r => {
+        reports.forEach(report => {
+
+            let color = '#2563EB';
+
+            if (report.status === 'resolved')
+                color = '#16A34A';
+
+            if (report.status === 'pending' || report.status === 'submitted')
+                color = '#DC2626';
+
+            if (report.status === 'assigned')
+                color = '#7C3AED';
+
+            if (report.status === 'in_progress')
+                color = '#F59E0B';
+
             const icon = L.divIcon({
-                html: `<div style="width:16px;height:16px;background:${r.color};border:3px solid #fff;border-radius:50%;box-shadow:0 2px 6px rgba(0,0,0,.3);"></div>`,
+                html: `
+                    <div style="
+                        width:16px;
+                        height:16px;
+                        background:${color};
+                        border:3px solid white;
+                        border-radius:50%;
+                        box-shadow:0 2px 6px rgba(0,0,0,.3);
+                    "></div>
+                `,
                 className: '',
                 iconSize: [16, 16],
                 iconAnchor: [8, 8]
             });
-            L.marker([r.lat, r.lng], { icon })
+
+            L.marker(
+                [report.latitude, report.longitude],
+                { icon }
+            )
                 .addTo(map)
-                .bindPopup(
-                    `<div style="font-family:'Inter',sans-serif;">
-                        <strong style="font-size:13px;">${r.title}</strong><br>
-                        <span style="font-size:11.5px;color:${r.color};font-weight:600;">${r.status}</span>
-                    </div>`
-                );
+                .bindPopup(`
+                <div style="font-family:Inter,sans-serif">
+                    <strong>#CP-${report.id}</strong><br>
+                    ${report.title}<br>
+                    <span style="color:${color};font-weight:600">
+                        ${report.status.replace('_', ' ')}
+                    </span>
+                </div>
+            `);
         });
 
-        setTimeout(() => map.invalidateSize(), 300);
+
     </script>
 @endpush

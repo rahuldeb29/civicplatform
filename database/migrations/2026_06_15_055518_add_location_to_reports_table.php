@@ -14,6 +14,7 @@ return new class extends Migration
             $table->decimal('latitude',  10, 7)->nullable();
             $table->decimal('longitude', 10, 7)->nullable();
             $table->foreignId('department_id')->nullable()->constrained()->nullOnDelete();
+            $table->decimal('accuracy', 8, 2)->nullable();
         });
     }
 

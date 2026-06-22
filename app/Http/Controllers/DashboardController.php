@@ -25,30 +25,30 @@ class DashboardController extends Controller
     ->whereIn('status', ['pending', 'submitted'])
     ->count();
 
-        $inProgressReports = Report::where('id', $user)
+        $inProgressReports = Report::where('user_id', $user)
                                    ->where('status', 'in_progress')
                                    ->count();
 
-        $resolvedReports = Report::where('id', $user)
+        $resolvedReports = Report::where('user_id', $user)
                                  ->where('status', 'resolved')
                                  ->count();
 
         // ── Last-month counts for trend calculation ────────────────
-        $lastMonthTotal = Report::where('id', $user)
+        $lastMonthTotal = Report::where('user_id', $user)
                                 ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                 ->count();
 
-        $lastMonthPending = Report::where('id', $user)
+        $lastMonthPending = Report::where('user_id', $user)
                                   ->whereIn('status', ['pending', 'submitted'])
                                   ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                   ->count();
 
-        $lastMonthInProgress = Report::where('id', $user)
+        $lastMonthInProgress = Report::where('user_id', $user)
                                      ->where('status', 'in_progress')
                                      ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                      ->count();
 
-        $lastMonthResolved = Report::where('id', $user)
+        $lastMonthResolved = Report::where('user_id', $user)
                                    ->where('status', 'resolved')
                                    ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
                                    ->count();
@@ -67,18 +67,18 @@ class DashboardController extends Controller
         // ── Recent notifications ───────────────────────────────────
         // Use DB notifications table if you have one, or Laravel's built-in
         $notifications = DB::table('notifications')
-                            ->where('id', $user)
+                            ->where('user_id', $user)
                             ->latest()
                             ->take(5)
                             ->get();
 
         // ── Attention count ────────────────────────────────────────
-        $attentionCount = Report::where('id', $user)
+        $attentionCount = Report::where('user_id', $user)
                                 ->whereIn('status', ['pending', 'submitted', 'assigned'])
                                 ->count();
 
         // ── Most recent active report for Case Tracker ─────────────
-        $activeReport = Report::where('id', $user)
+        $activeReport = Report::where('user_id', $user)
                               ->whereNotIn('status', ['resolved', 'closed'])
                             //   ->with('statusLogs')
                               ->latest()
@@ -88,12 +88,20 @@ class DashboardController extends Controller
        $impactRank = $this->getImpactRank(Auth::id());
 
         // ── Map pins ───────────────────────────────────────────────
-        // $mapReports = Report::where('id', $user->id)
-        //                     ->whereNotNull('latitude')
-        //                     ->whereNotNull('longitude')
-        //                     ->latest()
-        //                     ->take(10)
-        //                     ->get(['id', 'status', 'latitude', 'longitude']);
+
+        $userId = Auth::id();
+        $mapReports = Report::where('user_id', $userId)
+    ->whereNotNull('latitude')
+    ->whereNotNull('longitude')
+    ->latest()
+    ->take(10)
+    ->get([
+        'id',
+        'title',
+        'status',
+        'latitude',
+        'longitude'
+    ]);
 
         return view('dashboard', compact(
             'user',
@@ -110,6 +118,7 @@ class DashboardController extends Controller
             'attentionCount',
             'activeReport',
             'impactRank',
+            'mapReports',
         ));
     }
 

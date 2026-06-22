@@ -10,18 +10,12 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
         <div class="admin-logo-icon">
             <svg class="logo-svg" width="100" height="100" viewBox="0 0 100 100">
 
-    <rect width="100" height="100" rx="20" fill="#2563EB"/>
+                <rect width="100" height="100" rx="20" fill="#2563EB" />
 
-    <path
-        class="heartbeat"
-        pathLength="100"
-        d="M20 50 L35 50 L42 35 L52 65 L62 50 L80 50"
-        stroke="white"
-        stroke-width="5"
-        fill="none"
-    />
+                <path class="heartbeat" pathLength="100" d="M20 50 L35 50 L42 35 L52 65 L62 50 L80 50" stroke="white"
+                    stroke-width="5" fill="none" />
 
-</svg>
+            </svg>
         </div>
         <div class="admin-logo-text">
             <span class="admin-logo-name">CivicPulse</span>
@@ -47,8 +41,10 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
 
         {{-- REPORTS --}}
         <div class="admin-section-label">Reports</div>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
+
+        <a href="{{ route('admin.reports.index') }}"
+            class="admin-nav-item {{ request()->routeIs('admin.reports.index') ? 'active' : '' }}"
+            style="background: "><svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
                 <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" stroke="currentColor"
                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
                 <path d="M14 2v6h6" stroke="currentColor" stroke-width="2" stroke-linecap="round"
@@ -58,29 +54,23 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
             </svg>
             <span class="admin-nav-text">All Reports</span>
         </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
+
+        <a href="{{ route('admin.reports.pending') }}"
+            class="admin-nav-item {{ request()->routeIs('admin.reports.pending') ? 'active' : '' }}"> <svg
+                class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
                 <polyline points="12 7 12 12 15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
             <span class="admin-nav-text">Pending Reports</span>
-            <span class="admin-nav-badge">12</span>
         </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
-                <path d="M2 21v-2a4 4 0 0 1 4-4h2a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" />
-                <path d="M17 8l2 2 4-4" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-            <span class="admin-nav-text">Assigned Reports</span>
-        </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
+
+    
+        <a href="{{ route('admin.reports.resolved') }}"
+            class="admin-nav-item {{ request()->routeIs('admin.reports.resolved') ? 'active' : '' }}"> <svg
+                class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
                 <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2" />
-                <path d="M8 12l3 3 5-5" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                <polyline points="12 7 12 12 15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
             </svg>
             <span class="admin-nav-text">Resolved Reports</span>
@@ -96,15 +86,6 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
                 <line x1="15" y1="21" x2="15" y2="12" stroke="currentColor" stroke-width="2" />
             </svg>
             <span class="admin-nav-text">Departments</span>
-        </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <rect x="3" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
-                <rect x="14" y="3" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
-                <rect x="3" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
-                <rect x="14" y="14" width="7" height="7" rx="1" stroke="currentColor" stroke-width="2" />
-            </svg>
-            <span class="admin-nav-text">Categories</span>
         </a>
         <a href="#" class="admin-nav-item">
             <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
@@ -173,124 +154,124 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
             data-bs-toggle="modal" data-bs-target="#emergencyModal">Emergency
             Contact</button>
     </div>
-    
+
 </aside>
 
 <div class="modal fade" id="emergencyModal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-lg">
-            <div class="modal-content border-0 shadow-lg">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg">
 
-                <div class="modal-header bg-danger text-white">
-                    <h5 class="modal-title">
-                        🚨 Emergency Contact Directory
-                    </h5>
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title">
+                    🚨 Emergency Contact Directory
+                </h5>
 
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
-                    </button>
-                </div>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
+                </button>
+            </div>
 
-                <div class="modal-body">
+            <div class="modal-body">
 
-                    <div class="row g-3">
+                <div class="row g-3">
 
-                        <div class="col-md-6">
-                            <div class="card border-danger">
-                                <div class="card-body">
-                                    <h6>Police Control Room</h6>
-                                    <h4 class="text-danger">100</h4>
-                                </div>
+                    <div class="col-md-6">
+                        <div class="card border-danger">
+                            <div class="card-body">
+                                <h6>Police Control Room</h6>
+                                <h4 class="text-danger">100</h4>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="card border-success">
-                                <div class="card-body">
-                                    <h6>Ambulance</h6>
-                                    <h4 class="text-success">108</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card border-warning">
-                                <div class="card-body">
-                                    <h6>Fire Brigade</h6>
-                                    <h4 class="text-warning">101</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card border-primary">
-                                <div class="card-body">
-                                    <h6>Disaster Management</h6>
-                                    <h4 class="text-primary">1070</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6>Women Helpline</h6>
-                                    <h4>1091</h4>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h6>Child Helpline</h6>
-                                    <h4>1098</h4>
-                                </div>
-                            </div>
-                        </div>
-
                     </div>
 
-                    <hr>
+                    <div class="col-md-6">
+                        <div class="card border-success">
+                            <div class="card-body">
+                                <h6>Ambulance</h6>
+                                <h4 class="text-success">108</h4>
+                            </div>
+                        </div>
+                    </div>
 
-                    <h6 class="mb-3">Local Government Offices</h6>
+                    <div class="col-md-6">
+                        <div class="card border-warning">
+                            <div class="card-body">
+                                <h6>Fire Brigade</h6>
+                                <h4 class="text-warning">101</h4>
+                            </div>
+                        </div>
+                    </div>
 
-                    <table class="table table-bordered">
-                        <thead>
-                            <tr>
-                                <th>Department</th>
-                                <th>Phone</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>PWD Department</td>
-                                <td>+91 381 1234567</td>
-                            </tr>
-                            <tr>
-                                <td>Water Supply</td>
-                                <td>+91 381 2234567</td>
-                            </tr>
-                            <tr>
-                                <td>Electricity</td>
-                                <td>+91 381 3234567</td>
-                            </tr>
-                            <tr>
-                                <td>Sanitation</td>
-                                <td>+91 381 4234567</td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <div class="col-md-6">
+                        <div class="card border-primary">
+                            <div class="card-body">
+                                <h6>Disaster Management</h6>
+                                <h4 class="text-primary">1070</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Women Helpline</h6>
+                                <h4>1091</h4>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-body">
+                                <h6>Child Helpline</h6>
+                                <h4>1098</h4>
+                            </div>
+                        </div>
+                    </div>
 
                 </div>
 
-                <div class="modal-footer">
-                    <button class="btn btn-secondary" data-bs-dismiss="modal">
-                        Close
-                    </button>
-                </div>
+                <hr>
+
+                <h6 class="mb-3">Local Government Offices</h6>
+
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th>Department</th>
+                            <th>Phone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>PWD Department</td>
+                            <td>+91 381 1234567</td>
+                        </tr>
+                        <tr>
+                            <td>Water Supply</td>
+                            <td>+91 381 2234567</td>
+                        </tr>
+                        <tr>
+                            <td>Electricity</td>
+                            <td>+91 381 3234567</td>
+                        </tr>
+                        <tr>
+                            <td>Sanitation</td>
+                            <td>+91 381 4234567</td>
+                        </tr>
+                    </tbody>
+                </table>
 
             </div>
+
+            <div class="modal-footer">
+                <button class="btn btn-secondary" data-bs-dismiss="modal">
+                    Close
+                </button>
+            </div>
+
         </div>
     </div>
+</div>
 
 
 

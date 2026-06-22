@@ -163,7 +163,33 @@
 
                         <div class="form-group">
                             <label class="form-label">Location</label>
-                            <input type="text" name="location" class="form-control">
+
+                            <div style="display:flex; gap:10px;">
+                                <input type="text" id="location" name="location" class="form-control"
+                                    placeholder="Enter location">
+
+                                <button type="button" id="fetchLocationBtn" class="btn-submit" style="white-space:nowrap;">
+                                    Fetch Current Location
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Latitude</label>
+                            <input type="text" name="latitude" id="latitude" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">Longitude</label>
+                            <input type="text" name="longitude" id="longitude" class="form-control" readonly>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="form-label">GPS Accuracy (meters)</label>
+                            <input type="text" name="accuracy" id="accuracy" class="form-control" readonly>
+                        </div>
+
+                        <div id="locationStatus" style="margin-top:8px;font-size:13px;color:#6B7280;">
                         </div>
 
                         <div class="form-group">
@@ -174,12 +200,12 @@
                             </div>
                         </div>
 
-                        <button type="submit"  class="btn-submit">
+                        <button type="submit" class="btn-submit">
                             Submit Report
                         </button>
 
-                        
-                       
+
+
 
                     </form>
                 </div>
@@ -221,5 +247,66 @@
         </div>
 
     </div>
+
+
+    <script>
+        document.getElementById('fetchLocationBtn')
+            .addEventListener('click', function () {
+
+                const status = document.getElementById('locationStatus');
+
+                if (!navigator.geolocation) {
+                    status.innerHTML = "Geolocation is not supported.";
+                    return;
+                }
+
+                status.innerHTML = "Fetching location...";
+
+                navigator.geolocation.getCurrentPosition(
+
+                    async function (position) {
+
+                        const lat = position.coords.latitude;
+                        const lng = position.coords.longitude;
+                        const accuracy = position.coords.accuracy;
+
+                        document.getElementById('latitude').value = lat;
+                        document.getElementById('longitude').value = lng;
+                        document.getElementById('accuracy').value = accuracy;
+
+                        try {
+
+                            const response = await fetch(
+                                `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lng}`
+                            );
+
+                            const data = await response.json();
+
+                            if (data.display_name) {
+                                document.getElementById('location').value =
+                                    data.display_name;
+                            }
+
+                        } catch (error) {
+                            console.error(error);
+                        }
+
+                        status.innerHTML =
+                            `✓ Location captured (Accuracy: ${Math.round(accuracy)} meters)`;
+                    },
+
+                    function (error) {
+                        status.innerHTML = "Unable to fetch location.";
+                        console.error(error);
+                    },
+
+                    {
+                        enableHighAccuracy: true,
+                        timeout: 15000,
+                        maximumAge: 0
+                    }
+                );
+            });
+    </script>
 
 @endsection

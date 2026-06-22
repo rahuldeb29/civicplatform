@@ -4,13 +4,15 @@ use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ReportController;
 
+use App\Http\Controllers\AdminReportController;
+
 // routes/web.php
 
 use App\Http\Controllers\DashboardController;
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
-         ->name('dashboard');
+        ->name('dashboard');
 });
 
 Route::get('/', function () {
@@ -49,4 +51,20 @@ Route::get('/submit', [ReportController::class, 'create'])
 Route::post('/submit', [ReportController::class, 'store'])
     ->name('reports.store');
 
-require __DIR__.'/auth.php';
+Route::patch(
+    '/admin/reports/{report}/status',
+    [AdminReportController::class, 'updateStatus']
+)->name('admin.reports.updateStatus');
+
+Route::get('/admin/reports', [AdminReportController::class, 'index'])
+    ->name('admin.reports.index');
+
+Route::get('/admin/reports/pending', [AdminReportController::class, 'pending'])
+    ->name('admin.reports.pending');
+
+Route::get('/admin/reports/resolved', [AdminReportController::class, 'resolved'])
+    ->name('admin.reports.resolved');
+
+Route::get('/admin/reports/{report}', [AdminReportController::class, 'show'])
+    ->name('admin.reports.show');
+require __DIR__ . '/auth.php';

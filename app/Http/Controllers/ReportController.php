@@ -13,10 +13,12 @@ class ReportController extends Controller
         return view('layouts.submit');
     }
 
-     public function show(Report $report)
-    {
-        return view('requests.show', compact('report'));
-    }
+    public function show(Report $report)
+{
+    $report->load('user');
+
+    return view('requests.show', compact('report'));
+}
 
     public function store(Request $request)
     {
@@ -26,7 +28,10 @@ class ReportController extends Controller
             'priority' => 'required',
             'description' => 'required',
             'location' => 'required',
-            'image' => 'nullable|image'
+            'image' => 'nullable|image',
+            'latitude' => 'nullable|numeric',
+            'longitude' => 'nullable|numeric',
+            'accuracy' => 'nullable|numeric',
         ]);
 
         $imagePath = null;
@@ -36,17 +41,24 @@ class ReportController extends Controller
                 ->store('reports', 'public');
         }
 
-        Report::create([
+        $report = Report::create([
             'user_id' => Auth::id(),
             'title' => $request->title,
             'category' => $request->category,
             'priority' => $request->priority,
             'description' => $request->description,
             'location' => $request->location,
-            'image' => $imagePath,
-            'status' => 'Submitted'
-        ]);
 
+            
+
+            'latitude' => $request->latitude,
+            'longitude' => $request->longitude,
+            'accuracy' => $request->accuracy,
+
+            'image' => $imagePath,
+            'status' => 'submitted',
+        ]);
+        
         return redirect()
             ->route('dashboard')
             ->with('success', 'Report submitted successfully.');

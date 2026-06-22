@@ -1,8 +1,12 @@
-@extends('layouts.app')
+@extends('layouts.admin')
 @section('title', $report->title)
 
 @push('styles')
     <style>
+
+        body{
+            margin-left: 360px;
+        }
         /* ─── Page Shell ─────────────────────────────────────────── */
         .req-page {
             max-width: 1180px;

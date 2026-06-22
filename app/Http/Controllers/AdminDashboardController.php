@@ -11,7 +11,7 @@ use App\Models\User;
 
 class AdminDashboardController extends Controller
 {
-    
+
     public function index()
     {
         $user = Auth::id();
@@ -54,8 +54,8 @@ class AdminDashboardController extends Controller
             ->where('status', 'resolved')
             ->whereBetween('created_at', [$lastMonthStart, $lastMonthEnd])
             ->count();
-        
-        
+
+
 
 
         // ── Trend helpers ──────────────────────────────────────────
@@ -65,9 +65,36 @@ class AdminDashboardController extends Controller
         $resolvedTrend = $this->calcTrend($resolvedReports, $lastMonthResolved);
 
         // ── Paginated report history ───────────────────────────────
-        $reports = Report::with('user')
-            ->latest()
-            ->paginate(10);
+        $sort = request('sort', 'latest');
+
+$query = Report::with('user');
+
+switch ($sort) {
+
+    case 'oldest':
+        $query->oldest();
+        break;
+
+    case 'priority':
+        $query->orderByRaw("
+            FIELD(priority,
+            'High',
+            'Medium',
+            'Low')
+        ");
+        break;
+
+    case 'status':
+        $query->orderBy('status');
+        break;
+
+    default:
+        $query->latest();
+        break;
+}
+
+$reports = $query->paginate(10)
+                 ->appends(request()->query());
 
         // ── Recent notifications ───────────────────────────────────
         // Use DB notifications table if you have one, or Laravel's built-in
@@ -97,20 +124,60 @@ class AdminDashboardController extends Controller
 
         $totalUsers = User::count();
 
+        
+
         // ── Impact rank ────────────────────────────────────────────
         $impactRank = $this->getImpactRank(Auth::id());
 
         // ── Map pins ───────────────────────────────────────────────
-        //    $mapReports = Report::whereNotNull('latitude')
-        // ->whereNotNull('longitude')
-        // ->latest()
-        // ->get([
-        //     'id',
-        //     'title',
-        //     'status',
-        //     'latitude',
-        //     'longitude'
-        // ]);
+          $mapReports = Report::whereNotNull('latitude')
+    ->whereNotNull('longitude')
+    ->latest()
+    ->take(100)
+    ->get([
+        'id',
+        'title',
+        'status',
+        'latitude',
+        'longitude'
+    ]);
+
+        $departmentCounts = [
+            'PWD' => Report::whereIn('category', [
+                'Road Damage',
+                'Pothole',
+                'Drainage'
+            ])->count(),
+
+            'Water Supply' => Report::where('category', 'Water Leakage')->count(),
+
+            'Electricity' => Report::where('category', 'Street Light')->count(),
+
+            'Sanitation' => Report::where('category', 'Garbage')->count(),
+        ];
+
+        $monthlyReports = Report::selectRaw(
+            'MONTH(created_at) as month,
+     COUNT(*) as total'
+        )
+            ->whereYear('created_at', now()->year)
+            ->groupBy('month')
+            ->orderBy('month')
+            ->get();
+
+        $chartLabels = [];
+        $chartData = [];
+
+        foreach ($monthlyReports as $report) {
+            $chartLabels[] = Carbon::create()
+                ->month($report->month)
+                ->format('M');
+
+            $chartData[] = $report->total;
+        }
+
+        $departmentCounts['Others'] =
+            Report::count() - array_sum($departmentCounts);
 
         return view('admin.dashboard', compact(
             'totalReports',
@@ -123,7 +190,10 @@ class AdminDashboardController extends Controller
             'activeReport',
             'totalUsers',
             'totalCategories',
-            // 'mapReports'
+            'departmentCounts',
+            'chartLabels',
+            'chartData',
+            'mapReports'
         ));
     }
 

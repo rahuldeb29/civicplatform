@@ -17,6 +17,8 @@ class Report extends Model
         'priority',
         'description',
         'location',
+        'latitude',
+        'longitude',
         'image',
         'status'
     ];
@@ -25,6 +27,7 @@ class Report extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+        
     }
 
     public function department()
