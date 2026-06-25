@@ -61,11 +61,40 @@
     <!-- Page Header -->
     <div class="page-header">
         <div>
-            <h1>Resolved Reports</h1>
+            <h1>Pending Reports</h1>
             <p>Manage and monitor all citizen complaints efficiently.</p>
         </div>
         <!-- Optional: Add a button here if needed, e.g., Export -->
     </div>
+
+
+    <div class="stats-bar">
+    <div class="stat-item">
+        <div class="stat-value">{{ $reports->total() }}</div>
+        <div class="stat-label">Resolved Reports</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-value">
+            {{ $reports->where('priority', 'High')->count() }}
+        </div>
+        <div class="stat-label">High Priority</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-value">
+            {{ $reports->where('priority', 'Critical')->count() }}
+        </div>
+        <div class="stat-label">Critical Cases</div>
+    </div>
+
+    <div class="stat-item">
+        <div class="stat-value">
+            {{ $reports->where('status', 'assigned')->count() }}
+        </div>
+        <div class="stat-label">Assigned</div>
+    </div>
+</div>
 
     <!-- Main Card -->
     <div class="table-card">

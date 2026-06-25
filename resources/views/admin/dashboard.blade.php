@@ -5,8 +5,8 @@
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
     <style>
         /* ═══════════════════════════════════════════════════════════
-                               BASE & LAYOUT
-                            ═══════════════════════════════════════════════════════════ */
+                                   BASE & LAYOUT
+                                ═══════════════════════════════════════════════════════════ */
         body {
             margin: 0;
             padding: 0;
@@ -78,8 +78,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               PAGE HEADER
-                            ═══════════════════════════════════════════════════════════ */
+                                   PAGE HEADER
+                                ═══════════════════════════════════════════════════════════ */
         .page-header {
             display: flex;
             align-items: flex-start;
@@ -159,8 +159,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               STAT CARDS
-                            ═══════════════════════════════════════════════════════════ */
+                                   STAT CARDS
+                                ═══════════════════════════════════════════════════════════ */
         .stat-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -265,8 +265,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               CHART ROW
-                            ═══════════════════════════════════════════════════════════ */
+                                   CHART ROW
+                                ═══════════════════════════════════════════════════════════ */
         .chart-row {
             display: grid;
             grid-template-columns: 400px 1fr;
@@ -392,8 +392,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               SECTION CARD (used by table / notifications / map / etc)
-                            ═══════════════════════════════════════════════════════════ */
+                                   SECTION CARD (used by table / notifications / map / etc)
+                                ═══════════════════════════════════════════════════════════ */
         .section-card {
             background: #fff;
             border: 1px solid #E5E7EB;
@@ -461,8 +461,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               TABLE
-                            ═══════════════════════════════════════════════════════════ */
+                                   TABLE
+                                ═══════════════════════════════════════════════════════════ */
         .data-table {
             width: 100%;
             border-collapse: collapse;
@@ -668,8 +668,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               MID ROW : NOTIFICATIONS + MAP
-                            ═══════════════════════════════════════════════════════════ */
+                                   MID ROW : NOTIFICATIONS + MAP
+                                ═══════════════════════════════════════════════════════════ */
         .mid-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -772,8 +772,8 @@
         }
 
         /* ═══════════════════════════════════════════════════════════
-                               BOTTOM ROW : SUMMARY + CASE TRACKER
-                            ═══════════════════════════════════════════════════════════ */
+                                   BOTTOM ROW : SUMMARY + CASE TRACKER
+                                ═══════════════════════════════════════════════════════════ */
         .bottom-row {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -1087,8 +1087,8 @@
 
 
         /* ═══════════════════════════════════════════════════════════
-                               RESPONSIVE
-                            ═══════════════════════════════════════════════════════════ */
+                                   RESPONSIVE
+                                ═══════════════════════════════════════════════════════════ */
         @media (max-width: 1200px) {
             .stat-grid {
                 grid-template-columns: repeat(2, 1fr);
@@ -1408,11 +1408,11 @@
                                         'Drainage' => 'PWD',
                                         'Water Leakage' => 'Water Supply',
                                         'Street Light' => 'Electricity',
-                                        'Garbage' => 'Sanitation',
+                                        'Garbage' => 'Municipality',
                                     ];
                                 @endphp
 
-                                {{ $departmentMap[$report->category] ?? 'General' }}
+                                {{ $departmentMap[$report->category] ?? 'TSECL' }}
                             </td>
 
                             <td>
@@ -1462,7 +1462,13 @@
 
                             <td>
                                 <a href="{{ route('admin.reports.show', $report->id) }}" class="btn-action">
-                                    <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"></path></svg>
+                                    <svg style="width:14px; height:14px;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                            d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
+                                        </path>
+                                    </svg>
                                     View
                                 </a>
                             </td>
@@ -1852,15 +1858,15 @@
 
             const icon = L.divIcon({
                 html: `
-                    <div style="
-                        width:16px;
-                        height:16px;
-                        background:${color};
-                        border:3px solid white;
-                        border-radius:50%;
-                        box-shadow:0 2px 6px rgba(0,0,0,.3);
-                    "></div>
-                `,
+                        <div style="
+                            width:16px;
+                            height:16px;
+                            background:${color};
+                            border:3px solid white;
+                            border-radius:50%;
+                            box-shadow:0 2px 6px rgba(0,0,0,.3);
+                        "></div>
+                    `,
                 className: '',
                 iconSize: [16, 16],
                 iconAnchor: [8, 8]
@@ -1872,14 +1878,20 @@
             )
                 .addTo(map)
                 .bindPopup(`
-                <div style="font-family:Inter,sans-serif">
-                    <strong>#CP-${report.id}</strong><br>
-                    ${report.title}<br>
-                    <span style="color:${color};font-weight:600">
-                        ${report.status.replace('_', ' ')}
-                    </span>
-                </div>
-            `);
+    <a href="/admin/reports/${report.id}"
+       style="
+            display:block;
+            color:inherit;
+            text-decoration:none;
+            font-family:Inter,sans-serif;
+       ">
+        <strong>#CP-${report.id}</strong><br>
+        ${report.title}<br>
+        <span style="color:${color};font-weight:600">
+            ${report.status.replace('_', ' ')}
+        </span>
+    </a>
+    `);
         });
 
 

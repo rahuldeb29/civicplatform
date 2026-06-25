@@ -78,7 +78,9 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
 
         {{-- MANAGEMENT --}}
         <div class="admin-section-label">Management</div>
-        <a href="#" class="admin-nav-item">
+
+        {{-- Departments --}}
+        <a href="{{ route('admin.departments.index') }}" class="admin-nav-item {{ request()->routeIs('admin.departments.index')?'active': '' }}">
             <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
                 <path d="M4 21V8l8-5 8 5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
                     stroke-linejoin="round" />
@@ -87,63 +89,14 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
             </svg>
             <span class="admin-nav-text">Departments</span>
         </a>
-        <a href="#" class="admin-nav-item">
+        <a href="{{ route('admin.officers.index') }}" class="admin-nav-item {{ request()->routeIs('admin.officers.index')?'active': '' }}">
             <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
                 <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
                 <path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2"
                     stroke-linecap="round" />
                 <circle cx="18" cy="7" r="3" stroke="currentColor" stroke-width="2" />
             </svg>
-            <span class="admin-nav-text">Users</span>
-        </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M12 2L4 6v6c0 5.25 3.5 10.15 8 11.35C16.5 22.15 20 17.25 20 12V6l-8-4z" stroke="currentColor"
-                    stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
-            </svg>
-            <span class="admin-nav-text">Roles &amp; Permissions</span>
-        </a>
-
-        {{-- ANALYTICS --}}
-        <div class="admin-section-label">Analytics</div>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M21.21 15.89A10 10 0 1 1 8 2.83" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" />
-                <path d="M22 12A10 10 0 0 0 12 2v10z" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-            </svg>
-            <span class="admin-nav-text">Analytics</span>
-        </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <line x1="18" y1="20" x2="18" y2="10" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <line x1="12" y1="20" x2="12" y2="4" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-                <line x1="6" y1="20" x2="6" y2="14" stroke="currentColor" stroke-width="2" stroke-linecap="round" />
-            </svg>
-            <span class="admin-nav-text">Reports Overview</span>
-        </a>
-
-        {{-- SYSTEM --}}
-        <div class="admin-section-label">System</div>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="3" stroke="currentColor" stroke-width="2" />
-                <path
-                    d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"
-                    stroke="currentColor" stroke-width="2" />
-            </svg>
-            <span class="admin-nav-text">Settings</span>
-        </a>
-        <a href="#" class="admin-nav-item">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2" />
-                <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" stroke-linejoin="round" />
-                <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" />
-            </svg>
-            <span class="admin-nav-text">Help &amp; Support</span>
+            <span class="admin-nav-text">Officers</span>
         </a>
     </nav>
 

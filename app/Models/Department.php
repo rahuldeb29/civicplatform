@@ -10,7 +10,12 @@ class Department extends Model
     //
     use HasFactory;
     protected $fillable = [
+        
         'name',
+        'code',
+        'head_name',
+        'email',
+        'phone',
         'description'
     ];
 
@@ -18,4 +23,20 @@ class Department extends Model
     {
         return $this->hasMany(Report::class);
     }
+
+    public function officers()
+{
+    return $this->hasMany(User::class)
+                ->whereIn('role', [
+                    'officer',
+                    'admin',
+                    'department_head'
+                ]);
+}
+
+public function users()
+{
+    return $this->hasMany(User::class);
+}
+    
 }

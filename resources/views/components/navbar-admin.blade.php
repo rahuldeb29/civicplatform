@@ -16,13 +16,7 @@
     {{-- Right Actions --}}
     <div class="admin-topbar-actions">
         {{-- Notifications --}}
-        <div class="admin-notif-btn">
-            <svg viewBox="0 0 24 24" fill="none" width="21" height="21">
-                <path d="M18 8A6 6 0 1 0 6 8c0 7-3 9-3 9h18s-3-2-3-9" stroke="#111827" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-                <path d="M13.73 21a2 2 0 0 1-3.46 0" stroke="#111827" stroke-width="2" stroke-linecap="round"/>
-            </svg>
-            <span class="admin-notif-badge">12</span>
-        </div>
+        
 
         {{-- User --}}
         <div class="admin-topbar-user">

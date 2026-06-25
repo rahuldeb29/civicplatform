@@ -1545,9 +1545,20 @@ document.addEventListener('DOMContentLoaded', function () {
         )
         .addTo(map)
         .bindPopup(`
-            <strong>${report.title}</strong><br>
-            Status: ${report.status}
-        `);
+<a href="/reports/${report.id}"
+   style="
+        display:block;
+        color:inherit;
+        text-decoration:none;
+        font-family:Inter,sans-serif;
+   ">
+    <strong>#CP-${report.id}</strong><br>
+    ${report.title}<br>
+    <span style="color:${color};font-weight:600">
+        ${report.status.replace('_', ' ')}
+    </span>
+</a>
+`);
     });
 
     // Focus map on first report

@@ -14,12 +14,17 @@ class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-        'profile_image',
-    ];
+   protected $fillable = [
+    'name',
+    'email',
+    'password',
+    'phone',
+    'designation',
+    'department_id',
+    'status',
+    'role',
+    'profile_image',
+];
 
     protected $hidden = [
         'password',
@@ -33,4 +38,9 @@ class User extends Authenticatable
             'password' => 'hashed',
         ];
     }
+
+    public function department()
+{
+    return $this->belongsTo(Department::class);
+}
 }

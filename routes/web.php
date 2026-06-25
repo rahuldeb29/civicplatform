@@ -6,6 +6,12 @@ use App\Http\Controllers\ReportController;
 
 use App\Http\Controllers\AdminReportController;
 
+use App\Http\Controllers\AdminDepartmentController;
+use App\Http\Controllers\AdminOfficerController;
+
+use App\Http\Controllers\LandingController;
+
+
 // routes/web.php
 
 use App\Http\Controllers\DashboardController;
@@ -15,9 +21,7 @@ Route::middleware(['auth'])->group(function () {
         ->name('dashboard');
 });
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [LandingController::class, 'index']);
 
 Route::get('/dashboard', [DashboardController::class, 'index'])
     ->middleware(['auth'])
@@ -67,4 +71,51 @@ Route::get('/admin/reports/resolved', [AdminReportController::class, 'resolved']
 
 Route::get('/admin/reports/{report}', [AdminReportController::class, 'show'])
     ->name('admin.reports.show');
+
+
+Route::prefix('admin')->name('admin.')->group(function () {
+    Route::prefix('departments')->name('departments.')->group(function () {
+        Route::get('/index', [AdminDepartmentController::class, 'index'])->name('index');
+        Route::get('/create', [AdminDepartmentController::class, 'create'])->name('create');
+        Route::post('/', [AdminDepartmentController::class, 'store'])->name('store');
+        Route::get('/{id}', [AdminDepartmentController::class, 'show'])->name('show');
+        Route::get('/{department}/edit', [AdminDepartmentController::class, 'edit'])->name('edit');
+        Route::put('/{department}', [AdminDepartmentController::class, 'update'])->name('update');
+        Route::delete('/{id}', [AdminDepartmentController::class, 'destroy'])->name('destroy');
+    });
+});
+
+Route::prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::resource('officers', AdminOfficerController::class);
+
+        Route::patch(
+            'officers/{officer}/suspend',
+            [AdminOfficerController::class, 'suspend']
+        )->name('officers.suspend');
+
+    });
+
+    Route::middleware(['auth','role:super_admin'])
+    ->prefix('admin')
+    ->name('admin.')
+    ->group(function () {
+
+        Route::get('/dashboard',[AdminDashboardController::class,'index'])
+            ->name('dashboard');
+
+        Route::resource('departments', AdminDepartmentController::class);
+
+        Route::resource('officers', AdminOfficerController::class);
+
+});
+
+
+
+
+
+
+
 require __DIR__ . '/auth.php';

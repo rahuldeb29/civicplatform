@@ -14,11 +14,11 @@ class ReportController extends Controller
     }
 
     public function show(Report $report)
-{
-    $report->load('user');
+    {
+        $report->load('user');
 
-    return view('requests.show', compact('report'));
-}
+        return view('requests.show', compact('report'));
+    }
 
     public function store(Request $request)
     {
@@ -33,6 +33,23 @@ class ReportController extends Controller
             'longitude' => 'nullable|numeric',
             'accuracy' => 'nullable|numeric',
         ]);
+
+        $departmentId = match ($request->category) {
+
+            'Road Damage' => 1,      // PWD
+
+            'Water Leakage' => 2,    // Water Supply
+
+            'Street Light' => 3,     // Electricity
+
+            'Electricity' => 3,
+
+            'Garbage' => 4,          // Sanitation
+
+            'Drainage' => 5,         // Urban Development
+
+            default => null
+        };
 
         $imagePath = null;
 
@@ -49,16 +66,15 @@ class ReportController extends Controller
             'description' => $request->description,
             'location' => $request->location,
 
-            
+            'department_id' => $departmentId,
 
             'latitude' => $request->latitude,
             'longitude' => $request->longitude,
-            'accuracy' => $request->accuracy,
 
             'image' => $imagePath,
             'status' => 'submitted',
         ]);
-        
+
         return redirect()
             ->route('dashboard')
             ->with('success', 'Report submitted successfully.');
