@@ -8,6 +8,8 @@ use App\Models\Department;
 
 use App\Models\Report;
 
+use App\Models\User;
+
 class AdminDepartmentController extends Controller
 {
     
@@ -74,19 +76,44 @@ class AdminDepartmentController extends Controller
             ->with('success', 'Department created successfully');
     }
 
-    
-    public function show(Department $department)
-    {
-        $reports = Report::where('department_id', $department->id)
-            ->latest()
-            ->take(10)
-            ->get();
 
-        return view('admin.departments.show', compact(
-            'department',
-            'reports'
-        ));
-    }
+
+public function show($id)
+{
+    $department = Department::findOrFail($id);
+
+    $reports = Report::where('department_id', $department->id)
+        ->latest()
+        ->take(10)
+        ->get();
+
+    $totalReports = Report::where('department_id', $department->id)->count();
+
+    $pendingReports = Report::where('department_id', $department->id)
+        ->whereIn('status', ['pending','submitted'])
+        ->count();
+
+    $resolvedReports = Report::where('department_id', $department->id)
+        ->where('status', 'resolved')
+        ->count();
+
+    $officers = User::where('department_id', $department->id)
+        ->whereIn('role', [
+            'officer',
+            'department_head',
+            'admin'
+        ])
+        ->get();
+
+    return view('admin.departments.show', compact(
+        'department',
+        'reports',
+        'totalReports',
+        'pendingReports',
+        'resolvedReports',
+        'officers'
+    ));
+}
 
     public function edit(Department $department)
     {

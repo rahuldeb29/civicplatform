@@ -1,121 +1,161 @@
 <?php
 
-use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ReportController;
 
+use App\Http\Controllers\AdminDashboardController;
 use App\Http\Controllers\AdminReportController;
-
 use App\Http\Controllers\AdminDepartmentController;
 use App\Http\Controllers\AdminOfficerController;
 
-use App\Http\Controllers\LandingController;
+/*
+|--------------------------------------------------------------------------
+| Public Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::get('/', [LandingController::class, 'index'])->name('home');
 
 
-// routes/web.php
-
-use App\Http\Controllers\DashboardController;
-
-Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])
-        ->name('dashboard');
-});
-
-Route::get('/', [LandingController::class, 'index']);
-
-Route::get('/dashboard', [DashboardController::class, 'index'])
-    ->middleware(['auth'])
-    ->name('dashboard');
-
+/*
+|--------------------------------------------------------------------------
+| Authenticated Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    /*
+    |--------------------------------------------------------------------------
+    | Profile
+    |--------------------------------------------------------------------------
+    */
+
+    Route::get('/profile', [ProfileController::class, 'edit'])
+        ->name('profile.edit');
+
+    Route::patch('/profile', [ProfileController::class, 'update'])
+        ->name('profile.update');
+
+    Route::delete('/profile', [ProfileController::class, 'destroy'])
+        ->name('profile.destroy');
 });
 
 
-Route::get('/submit', function () {
-    return view('layouts.submit');
-})->name('submit');
+/*
+|--------------------------------------------------------------------------
+| Citizen Routes
+|--------------------------------------------------------------------------
+*/
 
-use App\Http\Controllers\AdminDashboardController;
+Route::middleware(['auth', 'role:citizen'])->group(function () {
 
-Route::get('/admin/dashboard', [AdminDashboardController::class, 'index'])
-    ->name('admin.dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])
+        ->name('dashboard');
 
-Route::get('/reports/{report}', [ReportController::class, 'show'])
-    ->name('show');
+    Route::get('/submit', [ReportController::class, 'create'])
+        ->name('submit');
 
+    Route::post('/submit', [ReportController::class, 'store'])
+        ->name('reports.store');
 
-
-Route::get('/submit', [ReportController::class, 'create'])
-    ->name('submit');
-
-Route::post('/submit', [ReportController::class, 'store'])
-    ->name('reports.store');
-
-Route::patch(
-    '/admin/reports/{report}/status',
-    [AdminReportController::class, 'updateStatus']
-)->name('admin.reports.updateStatus');
-
-Route::get('/admin/reports', [AdminReportController::class, 'index'])
-    ->name('admin.reports.index');
-
-Route::get('/admin/reports/pending', [AdminReportController::class, 'pending'])
-    ->name('admin.reports.pending');
-
-Route::get('/admin/reports/resolved', [AdminReportController::class, 'resolved'])
-    ->name('admin.reports.resolved');
-
-Route::get('/admin/reports/{report}', [AdminReportController::class, 'show'])
-    ->name('admin.reports.show');
-
-
-Route::prefix('admin')->name('admin.')->group(function () {
-    Route::prefix('departments')->name('departments.')->group(function () {
-        Route::get('/index', [AdminDepartmentController::class, 'index'])->name('index');
-        Route::get('/create', [AdminDepartmentController::class, 'create'])->name('create');
-        Route::post('/', [AdminDepartmentController::class, 'store'])->name('store');
-        Route::get('/{id}', [AdminDepartmentController::class, 'show'])->name('show');
-        Route::get('/{department}/edit', [AdminDepartmentController::class, 'edit'])->name('edit');
-        Route::put('/{department}', [AdminDepartmentController::class, 'update'])->name('update');
-        Route::delete('/{id}', [AdminDepartmentController::class, 'destroy'])->name('destroy');
-    });
+    Route::get('/reports/{report}', [ReportController::class, 'show'])
+        ->name('reports.show');
 });
 
-Route::prefix('admin')
-    ->name('admin.')
-    ->group(function () {
 
-        Route::resource('officers', AdminOfficerController::class);
+/*
+|--------------------------------------------------------------------------
+| Officer Routes
+|--------------------------------------------------------------------------
+*/
 
-        Route::patch(
-            'officers/{officer}/suspend',
-            [AdminOfficerController::class, 'suspend']
-        )->name('officers.suspend');
+Route::middleware(['auth', 'role:officer'])->prefix('officer')->name('officer.')->group(function () {
 
-    });
+    Route::get('/dashboard', [DashboardController::class, 'officerDashboard'])
+        ->name('dashboard');
 
-    Route::middleware(['auth','role:super_admin'])
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Department Head Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'role:department_head'])->prefix('department')->name('department.')->group(function () {
+
+    Route::get('/dashboard', [DashboardController::class, 'departmentDashboard'])
+        ->name('dashboard');
+
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Admin & Super Admin Routes
+|--------------------------------------------------------------------------
+*/
+
+Route::middleware(['auth', 'role:admin,super_admin'])
     ->prefix('admin')
     ->name('admin.')
     ->group(function () {
 
-        Route::get('/dashboard',[AdminDashboardController::class,'index'])
+        /*
+        |--------------------------------------------------------------------------
+        | Dashboard
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/dashboard', [AdminDashboardController::class, 'index'])
             ->name('dashboard');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Reports
+        |--------------------------------------------------------------------------
+        */
+
+        Route::get('/reports', [AdminReportController::class, 'index'])
+            ->name('reports.index');
+
+        Route::get('/reports/pending', [AdminReportController::class, 'pending'])
+            ->name('reports.pending');
+
+        Route::get('/reports/resolved', [AdminReportController::class, 'resolved'])
+            ->name('reports.resolved');
+
+        Route::get('/reports/{report}', [AdminReportController::class, 'show'])
+            ->name('reports.show');
+
+        Route::patch('/reports/{report}/status', [AdminReportController::class, 'updateStatus'])
+            ->name('reports.updateStatus');
+
+        /*
+        |--------------------------------------------------------------------------
+        | Departments
+        |--------------------------------------------------------------------------
+        */
 
         Route::resource('departments', AdminDepartmentController::class);
 
+        /*
+        |--------------------------------------------------------------------------
+        | Officers
+        |--------------------------------------------------------------------------
+        */
+
         Route::resource('officers', AdminOfficerController::class);
 
+        Route::patch('/officers/{officer}/suspend', [AdminOfficerController::class, 'suspend'])
+            ->name('officers.suspend');
 });
 
 
-
-
-
-
-
-require __DIR__ . '/auth.php';
+require __DIR__.'/auth.php';
