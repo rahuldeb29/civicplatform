@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Controllers\Controller;
 use App\Models\Report;
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class AdminReportController extends Controller
 {
@@ -74,9 +75,9 @@ class AdminReportController extends Controller
     {
         $reports = Report::with('user')
             ->whereIn('status', [
-                
+
                 'resolved',
-                
+
             ])
             ->latest()
             ->paginate(15);
@@ -96,8 +97,33 @@ class AdminReportController extends Controller
 
     public function show(Report $report)
     {
-        $report->load('user');
+        $report->load([
+            'user',
+            'assignedOfficer'
+        ]);
 
-        return view('admin.reports.show', compact('report'));
+        $officers = User::where('role', 'officer')
+            ->where('department_id', $report->department_id)
+            ->orderBy('name')
+            ->get();
+
+        return view('admin.reports.show', compact(
+            'report',
+            'officers'
+        ));
     }
+
+    public function assignOfficer(Request $request, Report $report)
+{
+    $request->validate([
+        'assigned_to' => 'required|exists:users,id',
+    ]);
+
+    $report->update([
+        'assigned_to' => $request->assigned_to,
+        'status' => 'assigned',
+    ]);
+
+    return back()->with('success', 'Officer assigned successfully.');
+}
 }

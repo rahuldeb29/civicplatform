@@ -3,10 +3,10 @@
 
 @push('styles')
     <style>
-
-        body{
+        body {
             margin-left: 360px;
         }
+
         /* ─── Page Shell ─────────────────────────────────────────── */
         .req-page {
             max-width: 1180px;
@@ -920,6 +920,96 @@
                             </div>
                         </div>
                     </div>
+                </div>
+
+
+
+                {{-- Assign Officer --}}
+                <div class="card">
+
+                    <div class="card-title">
+                        Assign Officer
+                    </div>
+
+                    @if($report->assignedOfficer)
+                                <div style="
+                            background:#ECFDF5;
+                            border:1px solid #A7F3D0;
+                            padding:12px;
+                            border-radius:10px;
+                            margin-bottom:18px;
+                        ">
+                                    <div style="font-size:12px;color:#6B7280;">
+                                        Currently Assigned
+                                    </div>
+
+                                    <div style="font-size:15px;font-weight:600;color:#111827;margin-top:4px;">
+                                        {{ $report->assignedOfficer->name }}
+                                    </div>
+
+                                    <div style="font-size:13px;color:#6B7280;">
+                                        {{ ucfirst(str_replace('_', ' ', $report->assignedOfficer->role)) }}
+                                    </div>
+                                </div>
+                    @else
+                                <div style="
+                            background:#FEF3C7;
+                            border:1px solid #FCD34D;
+                            padding:12px;
+                            border-radius:10px;
+                            margin-bottom:18px;
+                            color:#92400E;
+                            font-size:13px;
+                        ">
+                                    No officer assigned yet.
+                                </div>
+                    @endif
+
+                    <form method="POST" action="{{ route('admin.reports.assign', $report) }}">
+
+                        @csrf
+                        @method('PATCH')
+
+                        <label class="form-label">
+                            Select Officer
+                        </label>
+
+                        <select name="assigned_to" required>
+
+                            <option value="">
+                                Choose Officer...
+                            </option>
+
+                            @foreach($officers as $officer)
+
+                                <option value="{{ $officer->id }}" {{ $report->assigned_to == $officer->id ? 'selected' : '' }}>
+
+                                    {{ $officer->name }}
+
+                                </option>
+
+                            @endforeach
+
+                        </select>
+
+                        <button type="submit" style="
+                        width:100%;
+                        margin-top:16px;
+                        background:#2563EB;
+                        color:#fff;
+                        border:none;
+                        padding:12px;
+                        border-radius:10px;
+                        font-weight:600;
+                        cursor:pointer;
+                    ">
+
+                            Assign Officer
+
+                        </button>
+
+                    </form>
+
                 </div>
 
                 {{-- Activity Timeline --}}

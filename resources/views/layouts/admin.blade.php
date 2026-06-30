@@ -1,6 +1,3 @@
-{{-- resources/views/layouts/admin.blade.php
-Layout shell for the Super Admin dashboard.
-Includes the dark sidebar + light topbar. --}}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -355,8 +352,8 @@ Includes the dark sidebar + light topbar. --}}
 
             margin-left: 280px;
             /* same as sidebar width */
-            
-           
+
+
         }
 
         /* Collapsed sidebar state (toggled by JS) */
@@ -370,7 +367,19 @@ Includes the dark sidebar + light topbar. --}}
 </head>
 
 <body>
-    @include('components.sidebar-admin')
+    @if(auth()->user()->role == 'officer')
+
+        @include('components.sidebar-officer')
+
+    @elseif(auth()->user()->role == 'department_head')
+
+        @include('components.sidebar-department')
+
+    @elseif(in_array(auth()->user()->role, ['admin', 'super_admin']))
+
+        @include('components.sidebar-admin')
+
+    @endif
 
     <div class="admin-main-wrapper">
         @include('components.navbar-admin')

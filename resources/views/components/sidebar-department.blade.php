@@ -76,27 +76,8 @@ Light minimalistic sidebar for the Super Admin dashboard. --}}
             <span class="admin-nav-text">Resolved Reports</span>
         </a>
 
-        {{-- MANAGEMENT --}}
-        <div class="admin-section-label">Management</div>
-
-        {{-- Departments --}}
-        <a href="{{ route('admin.departments.index') }}" class="admin-nav-item {{ request()->routeIs('admin.departments.index')?'active': '' }}">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <path d="M4 21V8l8-5 8 5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round"
-                    stroke-linejoin="round" />
-                <line x1="9" y1="21" x2="9" y2="12" stroke="currentColor" stroke-width="2" />
-                <line x1="15" y1="21" x2="15" y2="12" stroke="currentColor" stroke-width="2" />
-            </svg>
-            <span class="admin-nav-text">Departments</span>
-        </a>
-        <a href="{{ route('admin.officers.index') }}" class="admin-nav-item {{ request()->routeIs('admin.officers.index')?'active': '' }}">
-            <svg class="admin-nav-icon" viewBox="0 0 24 24" fill="none">
-                <circle cx="9" cy="7" r="4" stroke="currentColor" stroke-width="2" />
-                <path d="M2 21v-2a4 4 0 0 1 4-4h6a4 4 0 0 1 4 4v2" stroke="currentColor" stroke-width="2"
-                    stroke-linecap="round" />
-                <circle cx="18" cy="7" r="3" stroke="currentColor" stroke-width="2" />
-            </svg>
-            <span class="admin-nav-text">Officers</span>
+        <a href="">
+            
         </a>
     </nav>
 

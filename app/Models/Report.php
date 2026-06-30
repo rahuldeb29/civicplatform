@@ -5,6 +5,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Vinkla\Hashids\Facades\Hashids;
 
 class Report extends Model
 {
@@ -12,6 +13,8 @@ class Report extends Model
 
     protected $fillable = [
         'user_id',
+        'department_id',
+        'assigned_to',
         'title',
         'category',
         'priority',
@@ -20,14 +23,26 @@ class Report extends Model
         'latitude',
         'longitude',
         'image',
-        'status'
+        'status',
     ];
+
+
+
+    public function getRouteKey()
+    {
+        return Hashids::encode($this->id);
+    }
 
 
     public function user()
     {
         return $this->belongsTo(User::class);
-        
+
+    }
+
+    public function assignedOfficer()
+    {
+        return $this->belongsTo(User::class, 'assigned_to');
     }
 
     public function department()
@@ -45,10 +60,7 @@ class Report extends Model
         return $this->hasMany(ReportStatusLog::class);
     }
 
-    public function feedback()
-    {
-        return $this->hasOne(ReportFeedback::class);
-    }
+
 
     public function reporter()
     {
@@ -99,7 +111,7 @@ class Report extends Model
         };
     }
 
-    
+
     public function getFormattedIdAttribute(): string
     {
         return '#CR-' . str_pad($this->id, 4, '0', STR_PAD_LEFT);

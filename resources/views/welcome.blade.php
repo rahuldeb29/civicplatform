@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>CivicConnect | Modern Issue Reporting</title>
+    <title>CivicPulse | Issue Reporting</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     
@@ -93,7 +93,7 @@
                 <div class="bg-blue-600 p-2 rounded-xl text-white">
                     <i data-lucide="shield" class="w-6 h-6"></i>
                 </div>
-                <span class="text-xl font-bold tracking-tight text-slate-900" id="logo-text">CivicConnect</span>
+                <span class="text-xl font-bold tracking-tight text-slate-900" id="logo-text">CivicPulse</span>
             </div>
             
             <div class="hidden md:flex space-x-8 items-center">
@@ -385,7 +385,7 @@
                     <div class="bg-blue-600 p-1.5 rounded-lg text-white">
                         <i data-lucide="shield" class="w-5 h-5"></i>
                     </div>
-                    <span class="text-lg font-bold text-white">CivicConnect</span>
+                    <span class="text-lg font-bold text-white">CivicPulse</span>
                 </div>
                 <p class="text-sm">Modernizing civic issue management for smart cities and transparent governance.</p>
             </div>
@@ -415,7 +415,7 @@
             </div>
         </div>
         <div class="max-w-7xl mx-auto px-6 pt-8 border-t border-slate-800 flex flex-col md:flex-row justify-between items-center text-sm text-slate-500">
-            <p>&copy; {{ date('Y') }} CivicConnect. All Rights Reserved.</p>
+            <p>&copy; {{ date('Y') }} CivicPulse. All Rights Reserved.</p>
             <div class="flex space-x-4 mt-4 md:mt-0">
                 <a href="#" class="hover:text-white"><i data-lucide="twitter" class="w-4 h-4"></i></a>
                 <a href="#" class="hover:text-white"><i data-lucide="github" class="w-4 h-4"></i></a>

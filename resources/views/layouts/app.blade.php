@@ -321,25 +321,25 @@
             padding: 28px 28px 28px 28px;
         }
 
-        .heartbeat{
-    stroke-dasharray:100;
-    stroke-dashoffset:100;
-    animation:heartbeatLine 2s linear infinite;
-}
+        .heartbeat {
+            stroke-dasharray: 100;
+            stroke-dashoffset: 100;
+            animation: heartbeatLine 2s linear infinite;
+        }
 
-@keyframes heartbeatLine{
-    0%{
-        stroke-dashoffset:100;
-    }
+        @keyframes heartbeatLine {
+            0% {
+                stroke-dashoffset: 100;
+            }
 
-    40%{
-        stroke-dashoffset:0;
-    }
+            40% {
+                stroke-dashoffset: 0;
+            }
 
-    100%{
-        stroke-dashoffset:0;
-    }
-}
+            100% {
+                stroke-dashoffset: 0;
+            }
+        }
 
         #page-loader {
             position: fixed;
@@ -372,33 +372,35 @@
             color: #2563EB;
         }
 
-.logo-svg{
-    transform-origin:center center;
-    animation:heartBeatLogo 2s ease-in-out infinite;
-}
+        .logo-svg {
+            transform-origin: center center;
+            animation: heartBeatLogo 2s ease-in-out infinite;
+        }
 
-@keyframes heartBeatLogo{
+        @keyframes heartBeatLogo {
 
-    0%,100%{
-        transform:scale(1);
-    }
+            0%,
+            100% {
+                transform: scale(1);
+            }
 
-    15%{
-        transform:scale(1.15);
-    }
+            15% {
+                transform: scale(1.15);
+            }
 
-    25%{
-        transform:scale(1);
-    }
+            25% {
+                transform: scale(1);
+            }
 
-    35%{
-        transform:scale(1.12);
-    }
+            35% {
+                transform: scale(1.12);
+            }
 
-    50%,100%{
-        transform:scale(1);
-    }
-}
+            50%,
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
     @stack('styles')
 </head>
@@ -424,7 +426,7 @@
 
             {{-- Your CivicPulse SVG --}}
             <svg width="100" height="100" viewBox="0 0 100 100">
-                <rect width="100" height="100" rx="20" fill="#2563EB" class="logo-svg"/>
+                <rect width="100" height="100" rx="20" fill="#2563EB" class="logo-svg" />
 
                 <path class="heartbeat" d="M20 50 L35 50 L42 35 L52 65 L62 50 L80 50" stroke="white" stroke-width="5"
                     fill="none" />
@@ -443,46 +445,46 @@
 <script>
     window.addEventListener('load', () => {
 
-    const loader = document.getElementById('page-loader');
-
-    setTimeout(() => {
-
-        loader.style.opacity = '0';
+        const loader = document.getElementById('page-loader');
 
         setTimeout(() => {
-            loader.style.display = 'none';
-        }, 300);
 
-    }, 1200);
+            loader.style.opacity = '0';
 
-});
+            setTimeout(() => {
+                loader.style.display = 'none';
+            }, 300);
+
+        }, 1200);
+
+    });
 
 
 
     document.querySelectorAll('a').forEach(link => {
 
-    link.addEventListener('click', function(e) {
+        link.addEventListener('click', function (e) {
 
-        if (
-            this.href &&
-            !this.href.includes('#') &&
-            this.target !== '_blank'
-        ) {
-            e.preventDefault();
+            if (
+                this.href &&
+                !this.href.includes('#') &&
+                this.target !== '_blank'
+            ) {
+                e.preventDefault();
 
-            const loader = document.getElementById('page-loader');
+                const loader = document.getElementById('page-loader');
 
-            loader.style.display = 'flex';
-            loader.style.opacity = '1';
+                loader.style.display = 'flex';
+                loader.style.opacity = '1';
 
-            setTimeout(() => {
-                window.location.href = this.href;
-            }, 600);
-        }
+                setTimeout(() => {
+                    window.location.href = this.href;
+                }, 600);
+            }
+
+        });
 
     });
-
-});
 </script>
 
 </html>

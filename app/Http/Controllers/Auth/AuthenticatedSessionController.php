@@ -35,7 +35,7 @@ class AuthenticatedSessionController extends Controller
                 return redirect()->route('dashboard');
 
             case 'officer':
-                return redirect()->route('officer.dashboard');
+                return redirect()->route('officers.dashboard');
 
             case 'department_head':
                 return redirect()->route('department.dashboard');
@@ -61,6 +61,6 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect('/login');
     }
 }

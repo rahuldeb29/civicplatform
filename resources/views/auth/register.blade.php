@@ -1,68 +1,438 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
-        @csrf
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Full page deep blue background wrapper */
+        .page-wrapper {
+            background-color: #0d255c; 
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        /* Combined two-column card layout */
+        .main-container {
+            max-width: 1050px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.3);
+            margin: auto;
+        }
+
+        /* Left Sidebar Styling */
+        .sidebar-panel {
+            background: linear-gradient(180deg, #e0ecff 0%, #badaff 100%);
+            padding: 48px;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            min-height: 580px;
+        }
+
+        /* Subtle vector city background placement */
+        .sidebar-panel::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 150px;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320" fill="%2394c2fc" opacity="0.5"><path d="M0,224L120,208C240,192,480,160,720,160C960,160,1200,192,1320,208L1440,224L1440,320L1320,320C1200,320,960,320,720,320C480,320,240,320,120,320L0,320Z"></path></svg>') bottom center no-repeat;
+            background-size: cover;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .sidebar-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .brand-logo-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 40px;
+        }
+
+        .brand-icon {
+            background-color: #1a56db;
+            color: white;
+            padding: 10px;
+            border-radius: 10px;
+            font-size: 20px;
+        }
+
+        .brand-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0b255c;
+            line-height: 1.1;
+        }
+
+        .brand-subtitle {
+            font-size: 13px;
+            color: #6b7280;
+        }
+
+        .hero-headline {
+            font-weight: 700;
+            color: #0b255c;
+            font-size: 32px;
+            line-height: 1.2;
+            margin-bottom: 16px;
+        }
+
+        .hero-headline span {
+            color: #1a56db;
+        }
+
+        .hero-desc {
+            color: #4b5563;
+            font-size: 15px;
+            line-height: 1.5;
+            margin-bottom: 40px;
+        }
+
+        /* Features Stack */
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+            margin-bottom: 24px;
+        }
+
+        .feat-icon-box {
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+        }
+
+        .feat-blue { background-color: #dbeafe; color: #1e40af; }
+        .feat-green { background-color: #d1fae5; color: #065f46; }
+        .feat-purple { background-color: #f3e8ff; color: #5b21b6; }
+
+        .feat-title {
+            font-weight: 700;
+            color: #1f2937;
+            font-size: 15px;
+            margin-bottom: 2px;
+        }
+
+        .feat-text {
+            color: #6b7280;
+            font-size: 13px;
+            line-height: 1.4;
+        }
+
+        /* Right Side Form Panel */
+        .form-panel {
+            padding: 50px;
+            background: #ffffff;
+        }
+
+        .inner-auth-card {
+            border: 1px solid #f0f2f5;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.02);
+            overflow: hidden;
+            background: #ffffff;
+        }
+
+        /* Form Tab Static Header (Sign Up Focus) */
+        .auth-tabs {
+            display: flex;
+            background-color: #f8fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .auth-tab {
+            flex: 1;
+            text-align: center;
+            padding: 16px;
+            font-weight: 700;
+            color: #1a56db;
+            background-color: #ffffff;
+            border: none;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 2px solid #1a56db;
+        }
+
+        .form-body-padding {
+            padding: 40px;
+        }
+
+        .form-control-wrapper {
+            position: relative;
+        }
+
+        .form-icon-left {
+            position: absolute;
+            left: 16px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #94a3b8;
+        }
+
+        .form-input-custom {
+            padding: 14px 16px 14px 45px !important;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #334155;
+        }
+
+        .form-input-custom:focus {
+            border-color: #1a56db;
+            box-shadow: 0 0 0 3px rgba(26, 86, 219, 0.15);
+        }
+
+        /* Custom styling for file upload input button */
+        .form-input-file-custom {
+            padding: 12px 16px 12px 45px !important;
+            border: 1px solid #cbd5e1;
+            border-radius: 10px;
+            font-size: 15px;
+            color: #64748b;
+        }
+
+        .form-input-file-custom::file-selector-button {
+            border: none;
+            background: #e2e8f0;
+            color: #334155;
+            padding: 4px 12px;
+            border-radius: 6px;
+            margin-right: 12px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .form-input-file-custom::file-selector-button:hover {
+            background: #cbd5e1;
+        }
+
+        .btn-register-custom {
+            background-color: #1a56db;
+            color: white;
+            font-weight: 600;
+            padding: 14px;
+            border-radius: 10px;
+            border: none;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            transition: background 0.2s ease;
+        }
+
+        .btn-register-custom:hover {
+            background-color: #154ec1;
+            color: white;
+        }
+
+        .divider-text {
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: #94a3b8;
+            font-size: 13px;
+            margin: 24px 0;
+        }
+
+        .divider-text::before, .divider-text::after {
+            content: '';
+            flex: 1;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .divider-text:not(:empty)::before { margin-right: .5em; }
+        .divider-text:not(:empty)::after { margin-left: .5em; }
+
+        /* Footer links styling */
+        .footer-area {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 13px;
+            margin-top: 30px;
+            width: 100%;
+            max-width: 1050px;
+        }
+
+        .footer-area a {
+            color: rgba(255, 255, 255, 0.6);
+            text-decoration: none;
+            margin-left: 20px;
+        }
+
+        .footer-area a:hover {
+            color: #ffffff;
+        }
+    </style>
+
+    <div class="page-wrapper">
+        
+        <div class="main-container">
+            <div class="row g-0">
+                
+                <div class="col-lg-5 sidebar-panel">
+                    <div class="sidebar-content">
+                        <div class="brand-logo-area">
+                            <div class="brand-icon">
+                                <i class="fa-solid fa-shield-halved"></i>
+                            </div>
+                            <div>
+                                <div class="brand-title">CivicPulse</div>
+                                <div class="brand-subtitle">Civic Issue Reporting Platform</div>
+                            </div>
+                        </div>
+
+                        <h1 class="hero-headline">Together, Let's Build a <span>Better Community</span></h1>
+                        <p class="hero-desc">Report civic issues, track progress, and help create a cleaner, safer and better tomorrow for everyone.</p>
+
+                        <div class="feature-item">
+                            <div class="feat-icon-box feat-blue">
+                                <i class="fa-regular fa-file-lines"></i>
+                            </div>
+                            <div>
+                                <div class="feat-title">Report Issues</div>
+                                <div class="feat-text">Easily report civic problems in your area</div>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feat-icon-box feat-green">
+                                <i class="fa-solid fa-chart-line"></i>
+                            </div>
+                            <div>
+                                <div class="feat-title">Track Progress</div>
+                                <div class="feat-text">Track the real-time status of your reports</div>
+                            </div>
+                        </div>
+
+                        <div class="feature-item">
+                            <div class="feat-icon-box feat-purple">
+                                <i class="fa-solid fa-users"></i>
+                            </div>
+                            <div>
+                                <div class="feat-title">Stronger Community</div>
+                                <div class="feat-text">Your voice helps build a better tomorrow</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-7 form-panel d-flex flex-column justify-content-center">
+                    <div class="inner-auth-card">
+                        
+                        <div class="auth-tabs">
+                            <div class="auth-tab">
+                                <i class="fa-solid fa-user-plus"></i> Citizen Registration
+                            </div>
+                        </div>
+
+                        <div class="form-body-padding">
+                            <div class="text-center mb-4">
+                                <h3 class="fw-bold text-dark mb-1">Create Your Account</h3>
+                                <p class="text-muted small">Join us to start reporting and tracking civic updates</p>
+                            </div>
+
+                            <form method="POST" action="{{ route('register') }}" enctype="multipart/form-data">
+                                @csrf
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary small">Full Name</label>
+                                    <div class="form-control-wrapper">
+                                        <i class="fa-regular fa-user form-icon-left"></i>
+                                        <input id="name" class="form-control form-input-custom" type="text" name="name" value="{{ old('name') }}" placeholder="Enter your full name" required autofocus autocomplete="name">
+                                    </div>
+                                    <x-input-error :messages="$errors->get('name')" class="mt-2" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary small">Email Address</label>
+                                    <div class="form-control-wrapper">
+                                        <i class="fa-regular fa-envelope form-icon-left"></i>
+                                        <input id="email" class="form-control form-input-custom" type="email" name="email" value="{{ old('email') }}" placeholder="Enter your email address" required autocomplete="username">
+                                    </div>
+                                    <x-input-error :messages="$errors->get('email')" class="mt-2" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary small">Password</label>
+                                    <div class="form-control-wrapper">
+                                        <i class="fa-solid fa-lock form-icon-left"></i>
+                                        <input id="password" class="form-control form-input-custom" type="password" name="password" placeholder="Create a secure password" required autocomplete="new-password">
+                                    </div>
+                                    <x-input-error :messages="$errors->get('password')" class="mt-2" />
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary small">Confirm Password</label>
+                                    <div class="form-control-wrapper">
+                                        <i class="fa-solid fa-lock-open form-icon-left"></i>
+                                        <input id="password_confirmation" class="form-control form-input-custom" type="password" name="password_confirmation" placeholder="Repeat your password" required autocomplete="new-password">
+                                    </div>
+                                    <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
+                                </div>
+
+                                <div class="mb-4">
+                                    <label class="form-label fw-semibold text-secondary small">Profile Image</label>
+                                    <div class="form-control-wrapper">
+                                        <i class="fa-regular fa-image form-icon-left"></i>
+                                        <input id="profile_image" class="form-control form-input-file-custom" type="file" name="profile_image" accept="image/*">
+                                    </div>
+                                    <x-input-error :messages="$errors->get('profile_image')" class="mt-2" />
+                                </div>
+
+                                <button type="submit" class="btn-register-custom">
+                                    <i class="fa-solid fa-user-check small"></i> Register Account
+                                </button>
+
+                                <div class="divider-text">OR</div>
+                                <div class="text-center small text-secondary">
+                                    Already registered? 
+                                    <a href="{{ route('login') }}" class="fw-bold text-decoration-none ms-1" style="color: #1a56db;">
+                                        Login Now <i class="fa-solid fa-angle-right small ms-1"></i>
+                                    </a>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
+        <div class="footer-area d-flex flex-column flex-md-row justify-content-between align-items-center">
+            <div class="mb-2 mb-md-0">
+                <i class="fa-solid fa-shield-halved me-1"></i> CivicPulse &copy; {{ date('Y') }} All rights reserved.
+            </div>
+            <div>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Service</a>
+            </div>
         </div>
 
-
-
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
-
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
-
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-        <!-- Profile Image -->
-<div class="mt-4">
-    <x-input-label for="profile_image" :value="__('Profile Image')" />
-
-    <input
-        id="profile_image"
-        type="file"
-        name="profile_image"
-        accept="image/*"
-        class="block mt-1 w-full border-gray-300 rounded-md shadow-sm"
-    >
-
-    <x-input-error :messages="$errors->get('profile_image')" class="mt-2" />
-</div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
-    </form>
+    </div>
 </x-guest-layout>

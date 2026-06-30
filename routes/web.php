@@ -12,6 +12,8 @@ use App\Http\Controllers\AdminReportController;
 use App\Http\Controllers\AdminDepartmentController;
 use App\Http\Controllers\AdminOfficerController;
 
+use App\Http\Controllers\OfficerReportController;
+
 /*
 |--------------------------------------------------------------------------
 | Public Routes
@@ -74,12 +76,6 @@ Route::middleware(['auth', 'role:citizen'])->group(function () {
 |--------------------------------------------------------------------------
 */
 
-Route::middleware(['auth', 'role:officer'])->prefix('officer')->name('officer.')->group(function () {
-
-    Route::get('/dashboard', [DashboardController::class, 'officerDashboard'])
-        ->name('dashboard');
-
-});
 
 
 /*
@@ -137,6 +133,12 @@ Route::middleware(['auth', 'role:admin,super_admin'])
         Route::patch('/reports/{report}/status', [AdminReportController::class, 'updateStatus'])
             ->name('reports.updateStatus');
 
+
+        Route::patch(
+            '/reports/{report}/assign',
+            [AdminReportController::class, 'assignOfficer']
+        )->name('reports.assign');
+
         /*
         |--------------------------------------------------------------------------
         | Departments
@@ -151,11 +153,56 @@ Route::middleware(['auth', 'role:admin,super_admin'])
         |--------------------------------------------------------------------------
         */
 
+
+
+
+
+
         Route::resource('officers', AdminOfficerController::class);
 
         Route::patch('/officers/{officer}/suspend', [AdminOfficerController::class, 'suspend'])
             ->name('officers.suspend');
-});
+    });
+
+Route::middleware(['auth', 'role:officer'])
+    ->prefix('officers')
+    ->name('officers.')
+    ->group(function () {
+
+        Route::get('/dashboard', [DashboardController::class, 'officerDashboard'])
+            ->name('dashboard');
+
+        Route::get('/reports', [OfficerReportController::class, 'index'])
+            ->name('reports.index');
+
+        Route::get('/reports/pending', [OfficerReportController::class, 'pending'])
+            ->name('reports.pending');
+
+        Route::get('/reports/in-progress', [OfficerReportController::class, 'inProgress'])
+            ->name('reports.inprogress');
+
+        Route::get('/reports/resolved', [OfficerReportController::class, 'resolved'])
+            ->name('reports.resolved');
+
+        Route::get('/reports/assigned', [OfficerReportController::class, 'assigned'])
+            ->name('reports.assigned');
+
+        Route::get('/reports/map', [OfficerReportController::class, 'map'])
+            ->name('map');
+
+        Route::get('/reports/{report}', [OfficerReportController::class, 'show'])
+            ->name('reports.show');
+
+        Route::patch('/reports/{report}/status', [OfficerReportController::class, 'updateStatus'])
+            ->name('reports.updateStatus');
+
+        Route::post('/reports/{report}/remark', [OfficerReportController::class, 'addRemark'])
+            ->name('reports.remark');
+
+        Route::get('/reports/assigned', [OfficerReportController::class, 'assigned'])
+            ->name('reports.assigned');
+    });
 
 
-require __DIR__.'/auth.php';
+
+require __DIR__ . '/auth.php';

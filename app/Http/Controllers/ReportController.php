@@ -34,22 +34,26 @@ class ReportController extends Controller
             'accuracy' => 'nullable|numeric',
         ]);
 
-        $departmentId = match ($request->category) {
+       $departmentId = match ($request->category) {
 
-            'Road Damage' => 1,      // PWD
+    // Public Works Department
+    'Road Damage' => 3,
 
-            'Water Leakage' => 2,    // Water Supply
+    // Water Supply Department
+    'Water Leakage' => 5,
 
-            'Street Light' => 3,     // Electricity
+    // Electricity Department
+    'Street Light' => 8,
+    'Electricity' => 6,
 
-            'Electricity' => 3,
+    // Sanitation Department
+    'Garbage' => 7,
 
-            'Garbage' => 4,          // Sanitation
+    // Urban Development / Drainage
+    'Drainage' => 7,
 
-            'Drainage' => 5,         // Urban Development
-
-            default => null
-        };
+    default => null,
+};
 
         $imagePath = null;
 

@@ -67,8 +67,19 @@
         }
 
         .btn-primary {
-            background: #1D4ED8;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 18px;
+            border-radius: 8px;
+            background: #2563EB;
             color: #fff;
+            border: none;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: inherit;
+            transition: background .15s;
         }
 
         .btn-primary:hover {
