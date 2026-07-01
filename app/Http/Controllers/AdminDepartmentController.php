@@ -12,7 +12,7 @@ use App\Models\User;
 
 class AdminDepartmentController extends Controller
 {
-    
+
     public function index()
     {
         $departments = Department::withCount([
@@ -42,7 +42,7 @@ class AdminDepartmentController extends Controller
         );
     }
 
-    
+
     public function create()
     {
         //
@@ -50,7 +50,7 @@ class AdminDepartmentController extends Controller
         return view('admin.departments.create', compact('departments'));
     }
 
-    
+
     public function store(Request $request)
     {
         $request->validate([
@@ -78,42 +78,42 @@ class AdminDepartmentController extends Controller
 
 
 
-public function show($id)
-{
-    $department = Department::findOrFail($id);
+    public function show($id)
+    {
+        $department = Department::findOrFail($id);
 
-    $reports = Report::where('department_id', $department->id)
-        ->latest()
-        ->take(10)
-        ->get();
+        $reports = Report::where('department_id', $department->id)
+            ->latest()
+            ->take(10)
+            ->get();
 
-    $totalReports = Report::where('department_id', $department->id)->count();
+        $totalReports = Report::where('department_id', $department->id)->count();
 
-    $pendingReports = Report::where('department_id', $department->id)
-        ->whereIn('status', ['pending','submitted'])
-        ->count();
+        $pendingReports = Report::where('department_id', $department->id)
+            ->whereIn('status', ['pending', 'submitted'])
+            ->count();
 
-    $resolvedReports = Report::where('department_id', $department->id)
-        ->where('status', 'resolved')
-        ->count();
+        $resolvedReports = Report::where('department_id', $department->id)
+            ->where('status', 'resolved')
+            ->count();
 
-    $officers = User::where('department_id', $department->id)
-        ->whereIn('role', [
-            'officer',
-            'department_head',
-            'admin'
-        ])
-        ->get();
+        $officers = User::where('department_id', $department->id)
+            ->whereIn('role', [
+                'officer',
+                'department_head',
+                'admin'
+            ])
+            ->get();
 
-    return view('admin.departments.show', compact(
-        'department',
-        'reports',
-        'totalReports',
-        'pendingReports',
-        'resolvedReports',
-        'officers'
-    ));
-}
+        return view('admin.departments.show', compact(
+            'department',
+            'reports',
+            'totalReports',
+            'pendingReports',
+            'resolvedReports',
+            'officers'
+        ));
+    }
 
     public function edit(Department $department)
     {
@@ -137,7 +137,7 @@ public function show($id)
             ->with('success', 'Department updated successfully.');
     }
 
-    
+
     public function destroy($id)
     {
         $department = Department::findOrFail($id);

@@ -932,37 +932,37 @@
                     </div>
 
                     @if($report->assignedOfficer)
-                                <div style="
-                            background:#ECFDF5;
-                            border:1px solid #A7F3D0;
-                            padding:12px;
-                            border-radius:10px;
-                            margin-bottom:18px;
-                        ">
-                                    <div style="font-size:12px;color:#6B7280;">
-                                        Currently Assigned
-                                    </div>
+                        <div style="
+                                    background:#ECFDF5;
+                                    border:1px solid #A7F3D0;
+                                    padding:12px;
+                                    border-radius:10px;
+                                    margin-bottom:18px;
+                                ">
+                            <div style="font-size:12px;color:#6B7280;">
+                                Currently Assigned
+                            </div>
 
-                                    <div style="font-size:15px;font-weight:600;color:#111827;margin-top:4px;">
-                                        {{ $report->assignedOfficer->name }}
-                                    </div>
+                            <div style="font-size:15px;font-weight:600;color:#111827;margin-top:4px;">
+                                {{ $report->assignedOfficer->name }}
+                            </div>
 
-                                    <div style="font-size:13px;color:#6B7280;">
-                                        {{ ucfirst(str_replace('_', ' ', $report->assignedOfficer->role)) }}
-                                    </div>
-                                </div>
+                            <div style="font-size:13px;color:#6B7280;">
+                                {{ ucfirst(str_replace('_', ' ', $report->assignedOfficer->role)) }}
+                            </div>
+                        </div>
                     @else
-                                <div style="
-                            background:#FEF3C7;
-                            border:1px solid #FCD34D;
-                            padding:12px;
-                            border-radius:10px;
-                            margin-bottom:18px;
-                            color:#92400E;
-                            font-size:13px;
-                        ">
-                                    No officer assigned yet.
-                                </div>
+                        <div style="
+                                    background:#FEF3C7;
+                                    border:1px solid #FCD34D;
+                                    padding:12px;
+                                    border-radius:10px;
+                                    margin-bottom:18px;
+                                    color:#92400E;
+                                    font-size:13px;
+                                ">
+                            No officer assigned yet.
+                        </div>
                     @endif
 
                     <form method="POST" action="{{ route('admin.reports.assign', $report) }}">
@@ -993,16 +993,16 @@
                         </select>
 
                         <button type="submit" style="
-                        width:100%;
-                        margin-top:16px;
-                        background:#2563EB;
-                        color:#fff;
-                        border:none;
-                        padding:12px;
-                        border-radius:10px;
-                        font-weight:600;
-                        cursor:pointer;
-                    ">
+                            width:100%;
+                            margin-top:16px;
+                            background:#2563EB;
+                            color:#fff;
+                            border:none;
+                            padding:12px;
+                            border-radius:10px;
+                            font-weight:600;
+                            cursor:pointer;
+                        ">
 
                             Assign Officer
 

@@ -28,10 +28,7 @@ class Report extends Model
 
 
 
-    public function getRouteKey()
-    {
-        return Hashids::encode($this->id);
-    }
+    
 
 
     public function user()

@@ -82,7 +82,7 @@
 
                 <div class="modal-header bg-danger text-white">
                     <h5 class="modal-title">
-                        🚨 Emergency Contact Directory
+                         Emergency Contact Directory
                     </h5>
 
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal">
